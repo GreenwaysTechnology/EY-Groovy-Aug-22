@@ -1,3 +1,1498 @@
 				Groovy
 .....................................................................................
 
+What is Groovy? 
+Groovy Programming language.
+Groovy is programming language for jvm.
+
+JVM -Java Virtual Machine - To run java applications
+
+JVM helps to build platform indepdendent applications.
+
+java application can be written using programming language called "Java programming language"
+
+Java pl
+ -It is high level pl
+ -Object oriented Programming.
+
+Java applications:
+
+Editions:
+
+-JAVA SE - Standard Edition - Core java
+-JAVA EE - Enterprise edition - Server apps - web apps,Web services,databases,distributed...
+-JAVA ME - Micro Edition - Mobile,card,device apps.
+
+Java Technology created by SUN microsystem at 1989,later acquired by Oracle.
+.....................................................................................
+				  Java Technology Standards
+.....................................................................................
+Standards:
+1.ANSI -  C,SQL  
+2.ECMA - Javascript
+
+
+
+Who defines the Java standards?
+JCP - Java Community Process
+JEP JDK Enhancement Proposal
+
+Java Technologies standardized by JCP Via JSR(Java Specification Request).
+
+JSR-No - JSR-253 - Java 11
+
+Core spec:
+1.jvm spec
+
+2.jse spec
+
+3.jee spec
+   servlet spec
+   webservice spec
+   jpa spec
+   security spec
+   ejb
+ etc...
+
+.....................................................................................
+		         JSR 223: Scripting for the JavaTM Platform
+
+
+JSR-223 Spec was released on Jun-09-2003.
+
+Before this specification, only one programming language was there for JVM, Java Programming language.
+
+This spec  aim is to introduce new Programming languages for JVM.
+
+Based on this Spec, the first alternate language was created for JVM -  Groovy Programming language.
+
+Groovy was the first  Scripting language for jvm ,which was created based JSR-223 Spec.
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+		  Groovy is dialect of java which is running on JVM.
+
+
+
+Java Program Flow:
+
+  				    JAVA code  - Hello.java
+					 | 
+                                    java compiler-javac -Hello.class (byte code)
+                                          |
+                                     java Hello - Run time
+					|
+				    Java Runtime Env -JVM
+
+
+
+Poly Glot : many programming language can be executed on single Runtime.
+
+JVM Poly glot.
+       
+                JPL  Groovy   Kotlin   JRuby Scala Clojure .... 
+		-----------------------------------------------
+				|
+			     .class
+				|
+			       JVM
+
+Groovy is programming language inspired from java,Ruby,Javascript,Perl, Smalltalk, Objective-C
+..............................................................................................
+				  Programming language styles
+.............................................................................................
+
+All Programming language follows the styles / Paradigm (way of writting code)
+
+Common Paradigms:
+
+1.Functional Programming Style
+2.Procedural Based
+3.Object oriented
+3.Rule based
+etc.....
+
+What is C?
+  C is Procedural based programming language.
+
+What is C++?
+  C++ is Object oriented Programming language
+
+What is Java?
+  Java was Object Oriented Programming language
+  Java is Object Oriented Programming,functional style language
+
+What is Javascript?
+  Javascript is Object based, functional style Programming language - Hybrid Style Language.
+
+What is Groovy?
+  Groovy is Object Oriented,functional Style Programming language - Hybrid Style Lanaugage
+
+............................................................................................
+				   Typing
+............................................................................................				  
+Typing defines the data type of "data", data is stored inside place holder called "variable".
+
+Based on Data Type, languages can be classified.
+
+1.static typed or strongly typed
+  during variable declaration we must declare type of variable,if not lanaguage compiler gives error
+  int a=10;
+   a=10
+ eg : c,c++,java...
+
+2.dynamic typed or weak typed
+ during variable declaration we need not  declare type of variable. 
+  var a =10;
+  let b=10;
+
+eg: java script,python.....
+
+Groovy is both static and dynamic typed language.
+
+int a=10; //strong/static typing
+def b=90;; //dynamic typed
+
+Groovy is Object Oriented,functional Style,static,dynamic typed Programming language
+Groovy is optionally typed and dynamic language with static typing and static compilation features.
+....................................................................................
+..............................................................................................
+				 Style Of Program
+.............................................................................................
+
+if you take any program, which follows some language syntax, which is more difficult to understand. Layman cant understand code.
+
+eg: c program,java program - 
+
+C:
+
+    /*
+     * C program to accept N numbers and arrange them in an ascending order
+     */
+ 
+    #include <stdio.h>
+    void main()
+    {
+ 
+        int i, j, a, n, number[30];
+        printf("Enter the value of N \n");
+        scanf("%d", &n);
+ 
+        printf("Enter the numbers \n");
+        for (i = 0; i < n; ++i)
+            scanf("%d", &number[i]);
+ 
+        for (i = 0; i < n; ++i) 
+        {
+ 
+            for (j = i + 1; j < n; ++j)
+            {
+ 
+                if (number[i] > number[j]) 
+                {
+ 
+                    a =  number[i];
+                    number[i] = number[j];
+                    number[j] = a;
+ 
+                }
+ 
+            }
+ 
+        }
+ 
+        printf("The numbers arranged in ascending order are given below \n");
+        for (i = 0; i < n; ++i)
+            printf("%d\n", number[i]);
+ 
+    }
+
+if you look at this code you cant understand easily because you are not professional coder.
+
+but what if systems enginer need to code? 
+ 
+it is not possible like above. what if every body want to understand code? How code should be?
+
+Code should be like english statements.
+
+sort 1..10 numbers in desc order - This is code /program
+*** ***************************************************************************
+
+
+if code is written based on pure language syntax, those language is called "GPL" -  General Purpose Programming language. -  C,C++,Java,Groovy
+
+if code is written based on  layman/ english like language , those language is called "DSL" -  DOMAIN Specific Programming language. - Groovy
+    "sort 1..10 numbers in desc order" -  DSL code
+
+                        "Groovy can help to write DSL Code"
+
+if you are able to write code more readable(dsl), that code is called "Declarative code /Declarative programming".
+
+if you are writing code which is not less readable that code is called "Imperative code".
+
+DSL code:
+ move left,move right, 
+ take 1 cup of milk add 2 gm sugar
+ shutdown machine-1 at 1 pm every day and restart after 2pm 
+
+Machine Health Checkup:
+1.find Machine at all locations
+2.filter machines which are unhealthy
+3.prepare report in pdf mail to healthCheckMaster@google.com
+4.do this every day at 1pm
+
+Groovy dsls are easy to understand by stack holders,tools users,end users,dev ops enginers.
+
+Types of DSL Persons:
+
+1.DSL Authors
+   Who creates DSL's - eg Jenkins JOB dsl
+2.DSL Users
+   who uses DSL written by others
+
+............................................................................................
+			Groovy can help us to write more declarative code
+............................................................................................
+Groovy is
+  -object oriented
+  -functional style
+  -dynamic typed
+  -static typed 
+  -delcarative
+  -dsl
+Programming language.
+
+
+Core Features of Groovy Lanaguage:
+
+1.Closures
+2.builders
+3.runtime & compile-time meta-programming
+4.functional programming
+5.type inference and static compilation
+6.Integration with existing java stack.
+..............................................................................................
+				 Style Of Program
+.............................................................................................
+
+if you take any program, which follows some language syntax, which is more difficult to understand. Layman cant understand code.
+
+eg: c program,java program - 
+
+C:
+
+    /*
+     * C program to accept N numbers and arrange them in an ascending order
+     */
+ 
+    #include <stdio.h>
+    void main()
+    {
+ 
+        int i, j, a, n, number[30];
+        printf("Enter the value of N \n");
+        scanf("%d", &n);
+ 
+        printf("Enter the numbers \n");
+        for (i = 0; i < n; ++i)
+            scanf("%d", &number[i]);
+ 
+        for (i = 0; i < n; ++i) 
+        {
+ 
+            for (j = i + 1; j < n; ++j)
+            {
+ 
+                if (number[i] > number[j]) 
+                {
+ 
+                    a =  number[i];
+                    number[i] = number[j];
+                    number[j] = a;
+ 
+                }
+ 
+            }
+ 
+        }
+ 
+        printf("The numbers arranged in ascending order are given below \n");
+        for (i = 0; i < n; ++i)
+            printf("%d\n", number[i]);
+ 
+    }
+
+if you look at this code you cant understand easily because you are not professional coder.
+
+but what if systems enginer need to code? 
+ 
+it is not possible like above. what if every body want to understand code? How code should be?
+
+Code should be like english statements.
+
+sort 1..10 numbers in desc order - This is code /program
+*** ***************************************************************************
+
+
+if code is written based on pure language syntax, those language is called "GPL" -  General Purpose Programming language. -  C,C++,Java,Groovy
+
+if code is written based on  layman/ english like language , those language is called "DSL" -  DOMAIN Specific Programming language. - Groovy
+    "sort 1..10 numbers in desc order" -  DSL code
+
+                        "Groovy can help to write DSL Code"
+
+if you are able to write code more readable(dsl), that code is called "Declarative code /Declarative programming".
+
+if you are writing code which is not less readable that code is called "Imperative code".
+
+DSL code:
+ move left,move right, 
+ take 1 cup of milk add 2 gm sugar
+ shutdown machine-1 at 1 pm every day and restart after 2pm 
+
+Machine Health Checkup:
+1.find Machine at all locations
+2.filter machines which are unhealthy
+3.prepare report in pdf mail to healthCheckMaster@google.com
+4.do this every day at 1pm
+
+Groovy dsls are easy to understand by stack holders,tools users,end users,dev ops enginers.
+
+Types of DSL Persons:
+
+1.DSL Authors
+   Who creates DSL's - eg Jenkins JOB dsl
+2.DSL Users
+   who uses DSL written by others
+
+............................................................................................
+			Groovy can help us to write more declarative code
+............................................................................................
+Groovy is
+  -object oriented
+  -functional style
+  -dynamic typed
+  -static typed 
+  -delcarative
+  -dsl
+Programming language.
+
+
+Core Features of Groovy Lanaguage:
+
+1.Closures
+2.builders
+3.runtime & compile-time meta-programming
+4.functional programming
+5.type inference and static compilation
+6.Integration with existing java stack.
+
+Groovy Eco System:
+.................
+Groovy is core programming language only.
+
+Web:
+  Dynamic Web Apps | RestFull Web Services
+1.Grails 
+  Framework written using groovy.
+
+Build System:
+  1.ANT
+  2.Maven
+  3.Gradle
+  4.Grape
+
+2.Gradle
+   Build system for java written in groovy
+
+Testing Framework:
+ Junit
+3.Spock:
+  Spock is a testing and specification framework for Java and Groovy applications. What makes it stand out from the crowd is its beautiful and highly expressive specification language.
+
+Tools:
+  Jenkins Pipeline projects
+
+Package Managers:
+
+NPM - javascript
+Nuget -MS .NET
+
+4.SDKMAN!  -Groovy
+
+5.Microservices:
+ Spring with Groovy
+ Micronaut  -Groovy
+
+SOAP UI - SCRIPTS Written in groovy.
+.....................................................................................
+........
+				Tools provided by Groovy
+
+Groovy sdk -  
+
+1.compiler 
+  groovyc
+ compile groovy into .class.
+2.groovy
+   To run groovy code. here we dont need to compile.
+  java Main  groovy Main
+3.groovy console
+   -Built in ide to write groovy code
+4.REPL  - Read Evaulate Print Loop : Interactive cmd line tool.-groovysh : groovy shell - Wrapper to low level services.
+
+
+         Groovy programs are saved with "filename.groovy"
+....................................................................................
+				Groovy Programming Style
+.....................................................................................
+
+1.class based 
+
+package com.mycom;
+
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+
+}
+
+if you look at this code, is java, which always starts with class and main method, without this syntax, we cant run code . - This is called class based.
+
+2.script based
+
+helloworld.groovy
+
+println "Hello Groovy World"
+
+The above code
+
+- dont have its own class like java
+- dont have main method like java
+- dont have semicollons like java
+
+Any how you are going to run on JVM, but how jvm can run this code without main method and main class.
+   Groovy compiler adds class and main method behind the scene.
+
+
+
+After compilation Groovy compiler writes a code like below
+
+import org.codehaus.groovy.runtime.InvokerHelper;
+
+class HelloWorld extends Script {    
+                 
+    def run() {                                 
+  	println "hello";               
+    }
+    static void main(String[] args) {           
+        InvokerHelper.runScript(HelloWorld, args)     
+    }
+}
+
+1.The HelloWorld class extends the groovy.lang.Script class
+
+2.groovy.lang.Script requires a run method returning a value
+  the script body goes into the run method
+
+3.the main method is automatically generated
+ 
+4.and delegates the execution of the script on the run   method
+
+Groovy topics:
+.............
+
+Groovy Language:
+...............
+
+1.Language Fundamentals
+2.Groovy Object orientations
+3.Groovy Closures and Functional Programming
+4.Groovy Meta Programming
+5.Groovy DSL
+6.Groovy and Builders
+7.Groovy and Collections
+8.Groovy and IO
+    -File,
+    -JSON
+    -XML
+9.Grails
+/////////////////////////////////////////////////////////////////////////////////////////////
+1.Language Fundamentals
+
+1.1.Type system
+1.2.literals
+1.3.variables
+1.4.operators
+1.5.control structures
+1.6.iterators/loops
+
+.....................................................................................
+				  variable declaration,Type System,literals
+.....................................................................................
+
+Groovy is dynamic , static typed programming lanugage.
+
+variables are other wise called as "identifiers"
+
+syntax:
+
+Strong typing
+ 
+type variable=value
+
+eg;
+ int a =10;
+
+
+//declaring variables - strong Typing / static typed programming
+int a=10
+println("a = " +  a)  //System.out.println("")
+//a="hello"
+String name="Subramanian"
+println("Your Name " + name) // "" + =>String concatenation.
+
+if you run this code, you will get compile time error.
+
+Caught: org.codehaus.groovy.runtime.typehandling.GroovyCastException: Cannot cast object 'hello' with class 'java.lang.String' to class 'int'
+org.codehaus.groovy.runtime.typehandling.GroovyCastException: Cannot cast object 'hello' with class 'java.lang.String' to class 'int'
+	at strongtyping.run(strongtyping.groovy:4)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+
+Data Types:
+
+1.numbers
+
+whole numbers - integers
+
+byte
+short
+int
+long
+
+Size
+     byte
+ *        -128 to 127
+ *        1 byte
+ *      short
+ *       -32,768 to 32767
+ *       2 bytes
+ *      int
+ *       -2Powof31 to 2powerof32
+ *       4 bytes
+ *       long
+ *       - -2power63 to 2powerof64
+ *       8 bytes
+
+decimal numbers
+float
+double
+    float - 4bytes
+    double -8bytes
+2.characters
+
+char -  single char 
+String - collection of chars
+
+3.boolean
+boolean 
+
+
+
+//whole numbers
+//byte b = 180;
+byte b=10;
+short s = 90;
+int i = 1000;
+long lng = 199999;
+println("byte => " + b);
+println("Short => " + s)
+println("Int => " + i);
+println("Long => " + lng)
+
+//Decimal Numbers
+float price = 10.5f; // 4 bytes
+println("Float => " + price)
+double distance = 187.7865; //8 bytes
+println("Double => " + distance);
+
+
+//characters
+char c = 'A'; //characters must be specified with single character
+println("Character =>" + c);
+//String
+String name = "Subramanian";
+String city = "Coimbatore";
+String zipcode = "642001"
+print("Your Details " + name + " , " + city + " , " + zipcode)
+
+
+
+//booleans store true or false - 1 bit 0 or 1
+
+boolean isValid = true;
+boolean isEnabled = false;
+boolean isAlive = true;
+println("isValid " + isValid)
+println("Is Enabled" + isEnabled)
+println("Is Alive " + isAlive)
+..............................................................................................
+			    Category of data type and Variable
+.............................................................................................
+
+1.Primitive Types
+  byte,int,short,long,float,double,char,boolean
+if any variable is declared with these types are called, primitive variables
+2.Reference Types
+  Object Types, if a variable is declared with Objects.
+ if any variable is delclared with object type are called "reference variables"
+ String name;
+................
+// instanceof operator is used to verify the variable that it belongs to particular type or not
+//instanceof operator works only with "Reference" types(Object types) not with primitives.
+
+//primitives
+int a = 10
+//Cannot perform instanceof check against primitive type int
+//println(a instanceof  int)
+String name = "Subramanian"
+println(name instanceof String)
+
+//dynamic typed : groovy assigns the type of variable not primitive but object type
+//Wrapper types: every primitive types has eq wrapper types
+//Wrappers - whole numbers
+/**
+ * byte  -  Byte
+ * short - Short
+ * int - Integer
+ * long - Long
+ */
+
+def b = 90
+println("B's type Byte or not " + (b instanceof Byte))
+println("B's type Short or not " + (b instanceof Short))
+println("B's type Integer or not " + (b instanceof Integer))
+println("B's type Long or not " + (b instanceof Long))
+
+def d = 1298834343434
+println("D's type Byte or not " + (d instanceof Byte))
+println("D's type Short or not " + (d instanceof Short))
+println("D's type Integer or not " + (d instanceof Integer))
+println("D's type Long or not " + (d instanceof Long))
+//How groovy understands the variable type automatically
+//based on value length
+//How value length is understand  - Integer.MAX_VALUE + 1 => Long
+
+def lightSpeed=2232333333333333333333333333333333333331212121212092347329473433483473984732948734983473984739473498473289472394238437498479487948749387492479479347943794479;
+println("lightSpeed's type Byte or not " + (lightSpeed instanceof Byte))
+println("lightSpeed's type Short or not " + (lightSpeed  instanceof Short))
+println("lightSpeed's type Integer or not " + (lightSpeed instanceof Integer))
+println("lightSpeed's type Long or not " + (lightSpeed instanceof Long))
+println("lightSpeed's type BigInteger or not " + (lightSpeed instanceof BigInteger))
+
+
+
+
+..............................................................................................					Type Conversion
+..............................................................................................
+
+Java:
+ 
+int a =10
+
+here
+ int is type
+ a is variable
+ 10 is value(literal)
+
+What is type of "a"?
+  int
+What is type of "10"?
+ 
+ Do you think that the type of a and type of "10" would be the same?
+ No! 
+
+      "The type of variable and type of value is different"
+
+in Integer family : the default type of value is "int"
+
+int a =10;
+
+a's type is int
+10's type is also int.
+.............................................................................................					Type Conversion
+..............................................................................................
+
+Java:
+ 
+int a =10
+
+here
+ int is type
+ a is variable
+ 10 is value(literal)
+
+What is type of "a"?
+  int
+What is type of "10"?
+ 
+ Do you think that the type of a and type of "10" would be the same?
+ No! 
+
+      "The type of variable and type of value is different"
+
+in Integer family : the default type of value is "int"
+
+int a =10;
+
+a's type is int
+10's type is also int.
+
+byte b=10;
+
+Here what is type of b?
+byte
+Here what is type of 10;
+int
+
+byte b=10(int)
+
+1 byte  =  4 byte
+
+
+Type conversion :
+ Converting from one type to another type.
+
+ int to byte
+
+Types of conversion:
+
+ - Implicit conversion
+     conversion is taken automatically.
+
+    byte b =10;  === byte == int
+    here 10(int) is converted into byte.   
+    int b =9000; ==>int === int
+
+eg:
+        byte a = 10;  //byte <=== int
+        short s =100; // short <===int
+        int i =10 ;   // int <=== int
+        long lng = 1000; //long <== int
+
+ - Explicit conversion
+      We need to convert manually.
+  While conversion there is possibility of data loss.
+
+  Syntax
+ 
+      targettype = (targetype)sourcetype
+      byte b = (byte)900;
+  
+      int a = 10; //10 type is int---size 4 bytes
+        byte b = 19; // 19 type is ? - int only  // byte(2) === int(4)
+        //byte b1 =9000; // here 9000 cant be stored inside b1 because b1 capacity is lesser than value
+        //what if i want to store 9000 inside b1
+        //type conversion
+        byte b2 = (byte)10000;
+        System.out.println(b2);
+
+
+Decimal numbers:
+................
+What is default type of decimals?
+
+float price = 10.5;  // float === double === 4 bytes ===8 bytes- error
+
+Decimal numbers:
+................
+What is default type of decimals?
+
+float price = 10.5;  // float === double === 4 bytes ===8 bytes- error
+
+what is type of 10.5?
+  double.
+
+type conversion for floating points
+
+ways:
+
+1. by adding f suffix
+	
+        float price = 10.5f;
+
+here 10.5(double) is converted into float.
+
+2.by using () syntax
+      float price1 = (float) 10.5;
+
+In groovy, it happens automatically
+
+..............................................................................................
+Characters:
+
+the value of char type is int
+
+        char c = 'A'; //int
+        char c1 = 99; //int
+        System.out.println(c1 + " " + c);
+        System.out.println((char) c1 + " " + (int) c);
+
+byte b = 10000000;
+float f = 90.89;
+println("byte b =>" + b)
+println("flat f =>" + f)
+.....................................................................................
+........
+				comments
+
+
+Comments;
+
+1.single line comment:
+
+//
+
+2.Muliti line comment
+/*
+
+*/
+
+3.Groovydoc comment
+ /**
+ *
+ *
+ /
+
+4.Shebang line
+
+#! /user/bin/env/ groovy
+
+  This for running script directly from the commandline in unix operating system.
+
+///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+                               Key words from groovy
+
+
+NOte: 
+
+ Keywords cant be used as value or variable in groovy.
+
+ eg: 
+ as, break,case,catch,class, instance of,for, goto def, enum do, const,...........
+//////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+				  Coding standards
+..............................................................................................
+
+There are different types  of code
+
+1.variables
+2.functions
+3.classes
+4.methods
+5.interfaces
+	
+variables:
+
+1.variable name must be meaningfull to the problem.
+
+def a=10; //
+def productId=10
+def firstName="Subramanian"
+
+2.variables must be camelcased.
+
+startswithSmall letter
+ 
+def id=1
+def name="subramanian"
+def firstName="Dhivya Sree"
+
+3.variables can  
+- start with letter,
+- start with $
+- start with _
+- not with numbers
+eg:
+   def $id
+   def _name
+   def 1Name => invalid
+............................................................................................
+				Difference with Java
+............................................................................................
+
+
+Groovy makes code as simple as possible.Groovy uses lot of boilerplate code on behalf of us.
+
+Typical java program structure :
+
+package com.mycompany.project.module.submodule;
+
+import java.util.*;
+import java.math.BigInteger;
+
+
+public class MyClass{
+
+ public static void main(String args[]){
+
+ }
+ 
+}
+
+What is package?
+  
+   It is way to organize the code into file and folders, physically and logically.
+ 
+in java and groovy code is organized as files and folders inside disk.
+
+Inside code , we use the keyword called "package" key word which represents "this current file belongs to "com/airbus" folder
+
+
+The default Package:
+
+ if you dont save file inside any subfolders like com/airbus, the programs can be saved inside
+project root dir "src"
+ This is called default package, no package statement is given.
+
+In groovy scripts are written without package statement, which is valid and also recommended
+..............................................................................................
+				 Types of packages
+..............................................................................................
+
+1.custom packages
+   packages created by developer while write apps
+
+package com.airbus.jenkins.pipelines
+
+package follows some coding standards defined by SUN microsystem when java was created.
+
+any package has to start with
+ com - company
+ org - organization
+ companyName 
+    hudson.
+
+secondconvention
+  companyName -  airbus
+Thirdconvention
+  Name of the Project - jenkins
+Fourth Convention
+  Module name  - pipelines 
+
+
+all private projects starts with "com"
+
+all opensource projects starts with "org"
+
+2.built in packages
+
+ The packages provided by language like java,groovy,scala,kotlin
+
+java Language:
+  java.
+  javax.
+
+Groovy Lanaguage
+  groovy.lang
+  groovy.util
+  groovy.sql
+  org.apache.groovy.antlr
+
+3.third party packages
+  The package developed by third parties used by us.
+
+Mostly all tools and frameworks, libs are distrbuted as third party packages.
+
+eg:
+ Spring Framework
+ Jenkins
+ Grails
+.....................................................................................
+..............................................................................................			  How to use packages inside code?
+..............................................................................................
+How to use package features inside our code?
+
+using the keyword called "import" , to link programs inside our programs
+
+syntax:
+ import com.airbus.jenkins.pipelines.CustomJob;
+ 
+
+eg:
+package com.airbus.jenkins.pipelines
+
+class CustomJob {
+    void start(){
+        println ("......Build Starts.....")
+    }
+}
+
+How to use This class?
+
+Syntax : 1 - Import only one class
+
+import com.airbus.jenkins.pipelines.CustomJob
+
+def job = new CustomJob()
+job.start()
+
+
+Syntax : 2 : import all classes
+
+import com.airbus.jenkins.pipelines.* // import all classes from inside this dir.
+
+def job = new CustomJob()
+job.start()
+def pipeline = new CustomPipeline()
+pipeline.init()
+
+The 2nd syntax not recommended mostly , the reason is which imports all classes in one short so which degreads performance.
+.....................................................................................
+.............................................................................................
+				 common packages in java and groovy
+.............................................................................................
+
+java.lang - The fundamental language features are provided inside this package without this package we cant write even one single java program.
+
+public class TypeDemo {
+    public static void main(String[] args) {
+        byte a = 10;  //byte <=== int
+        short s = 100; // short <===int
+        int i = 10;   // int <=== int
+        long lng = 1000; //long <== int
+
+        //explicit conversion
+        byte b = (byte) 10000;
+
+
+        //here f is sufffix used to convert double to float
+        float f = 10.5f;  // default type of precision is double
+        float f1 = (float) 10.89;
+
+        //Reference Type
+        Integer myNumber =100;
+        //primitive type
+        int myNewNumber =myNumber; //int <== Integer -  Boxing
+
+        Integer myNumber2 = myNewNumber; //Integer <=== int Unboxing
+
+    }
+}
+
+if you want to compile and run we need java.lang package must have been imported.
+
+here in the above we have not imported any java.lang package ,still works how?
+
+                   "java by default imports java.lang package"
+
+		     In java only one default package 
+.............................................................................................
+				Groovy Packages
+.............................................................................................
+
+groovy supports both java packages as well as groovy own packages.
+
+groovy.lang is similar to java.lang has all the language core features.
+
+without lang package , we cant write any groovy program..
+
+Groovy compiler automatimatically imports lot of default packages.
+
+java:
+1.java.io.*;
+2.java.lang.*;
+3.java.math.BigDecimal
+4.java.math.BigInteger
+5.java.net.*
+6.java.util.*
+
+Groovy language also has its own packages
+
+ Groovy has extend from java, which supports all java packages + who supports extra packages.
+
+groovy.XXX
+groovy.lang.*;
+groovy.util.*;
+.....................................................................................
+
+
+..............................................................................................
+					Values(literals) In Groovy
+.............................................................................................
+
+1.Strings && Characters
+2.Numbers
+3.Booleans
+4.Lists
+5.Arrays
+6.Map
+7.Objects
+
+Strings:
+ Text literals are represented in the form of collection of characters called strings.
+ Strings are Objects.
+ Strings are instance of java.lang.String class as well as groovy.lang.GString
+ Characters in groovy is represented in String object.
+ Each character is 16-bit unicode character.
+
+
+String declaration Patterns:
+............................
+
+1.single quoted  - ''
+2.Double quoted  = "" 
+3.Triple  Single Quoted = '''
+4.Triple double quoted = """
+5.slashy quoted - / /
+6.Dollar slashy quoted - $/ /
+
+
+1.single quote 
+2.double qutote
+//String declarations
+
+//single quote
+
+def str1 ='Hello,Groovy'
+//double quote
+def str2 ="Hello,Groovy How are you?"
+
+//Test both variables are from java or gString
+println("Single Quote is Instance of java.lang.String => " +  (str1 instanceof  java.lang.String))
+println("Double Quote is Instance of java.lang.String => " +  (str2 instanceof  java.lang.String))
+..............................................................................................
+				   String Concatnation
+.............................................................................................
+
+Using + operator:
+.................
+This operator derived from java lang.
+
+//Java style of String concatenation  
+println "............................."
+def name = "Subramanian";
+def greeting = 'Hello ' + name;
+println greeting;
+println greeting instanceof java.lang.String;
+//
+def firstName="Subramanian";
+def lastName = "Murugan"
+println("Name " + firstName + lastName)
+
+Interpolation:
+ -It is replacement of existing string concation
+ -way of access variables/expression inside string is so different
+ -This feature is not available in java language
+ 
+in order to add interpolation syntax, groovy has added a new class groovy.lang.GString
+
+GString Syntax:
+
+ "${expression}"
+ "$expression"
+
+//How to interpolate strings
+
+def name = "Subramanian"
+//here message type is groovy.GString not java.lang.String
+def message = "Hello ${name}" // string interpolation
+println(message)
+
+//
+def host = "airbus.com"
+def port = 8080
+def url = "/api"
+def path = "/pipelines"
+
+//def uri = "http://${host}:${port}${url}${path}";
+def uri = "http://$host:$port$url$path";
+
+println(uri)
+..............................................................................................
+				Multi line Strings
+.............................................................................................
+
+//Multi line java synatx:
+String title = "Airbus";
+String doc = "<html>" +
+        "<head>" +
+        "<title>" + title + "</title>" +
+        "<body>" +
+        "<h1> Hello</h1>" +
+        "</body>" +
+        "</body></html>";
+System.out.println(doc);
+//Groovy Style :  ''' ''' Using single triple quote : you cant interpolate
+def mydoc ='''
+  <html>
+  <head>
+    <title>Airbus</title>
+  </head>
+  <body>
+     <h1>Hello</h1>
+  </body>
+  </html>  
+'''
+println(mydoc)
+//double triple quote
+
+def message="Hello"
+
+def mynewDoc = """
+  <html>
+  <head>
+    <title>$title</title>
+  </head>
+  <body>
+     <h1>$message</h1>
+  </body>
+  </html>  
+"""
+println(mynewDoc)
+............................................................................................
+				Escaping Special Characters
+............................................................................................
+
+//here i want to print single
+def quote = " Hello ! how are you? \\ i am fine what \" about you ";
+println quote;
+quote = ' Hello ! how are you? \' i am fine what about you';
+println quote;
+
+quote = " Hello ! how are you? \t \t i am fine what \n about you";
+println quote;
+
+def priceInEuro = "Price in Euro \u20AC";
+println priceInEuro
+
+special characters you can escape:
+...................................
+
+\b - backspace
+\f - formfeed
+\t  -tab
+\s -single space
+\' - single quote within single quoted.
+\" - double quote witthin another double quote
+\unicode - unicode escape
+..............................................................................................
+				Slashy String
+..............................................................................................
+Strings inside slash / strings /
+
+Slashy strings are like other string declaration(type of declaration)
+Which encapsulate all string declaration features
+
+// '' ,"" ,'''''' ,""" """ ,"\special" "interploation" === \slash\
+
+
+//Slashy Strings
+//syntax1 : normal string
+def str = /This is slashy string/
+println str
+//Syntax 2 : it allows special characters as
+def myquote =/How are you! \i am fine \;/;
+println myquote
+//syntax 3 : multi line with slashy strings
+def doc = / hello
+ how are you?
+ welcome
+ greetings   
+/;
+println doc;
+
+// syntax 4 : interpolation with slashy strings
+def name='Subramanian'
+def greeting= / Hello ${name} /;
+println greeting
+
+Applications of Slashy;
+
+-Text Processing:
+
+  String processing can be done in many ways
+  -Using string apis and logic
+  -Regular Expression : Regx
+     It is one of the DSL Programming language, introduced inside UNIX operating in order to      simlify the Text processing using "some special characters"
+  After popularity of Regex, many languages started integrating regular expressions features as language apis.
+
+Java introduced regualar expressions via java.util.regex package 
+
+
+String mydata = " hey \; \$ hello 0 1, how are y subramanian , 7m3 ";
+
+i want  to extract nos
+i want to extract special characters
+i want to only $
+
+Task: write a code-java to extract nos,spicial characters,$
+
+
+Regular Expression Implmentation:
+  Regular expression is dsl language to process strings / text
+  Regular expression works based on symbols called "Patterns"
+ 
+
+Regular expression in java:
+
+java.util.regex;
+
+Regular expression uses symbols
+ +
+ *
+ ~
+ {}
+ ?
+https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html
+
+Character classes
+[abc]	a, b, or c (simple class)
+[^abc]	Any character except a, b, or c (negation)
+[a-zA-Z]	a through z or A through Z, inclusive (range)
+[a-d[m-p]]	a through d, or m through p: [a-dm-p] (union)
+[a-z&&[def]]	d, e, or f (intersection)
+[a-z&&[^bc]]	a through z, except for b and c: [ad-z] (subtraction)
+[a-z&&[^m-p]]	a through z, and not m through p: [a-lq-z](subtraction)
+
+
+Simple Pattern syntax:
+......................
+
+ \d+ -match /find any number in the string - match any number one or more times
+
+Declare pattern in java
+  
+   String pattern =  "\d+"; -  this is compile time error because, special characters
+needed to be escaped.
+   
+   String pattern ="\\d+" -  now it is vaild , because we have escaped \+ character by \
+
+Drawback of this syntax:
+  Very complex , when we form complex regular expressions
+eg:
+ "\\+d\\+d\\*d ^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$"
+
+package com.airbus.strings;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class RegularExpressionApp
+{
+    public static void main(String[] args) {
+        //Declare pattern
+        String pattern = "\\d+";  //what you want
+        System.out.println(pattern);
+        //find out all numbers from this string
+        String inputString ="hey  hello 0 1, how subramanian 1 , 7m3";
+        //logic to extract nos from the string
+        //Compile the Pattern
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher digitMatcher =compiledPattern.matcher(inputString);
+        System.out.println("Source String "+ inputString);
+        while(digitMatcher.find()) {
+            System.out.println(digitMatcher.group());
+        }
+
+    }
+}
+..............................................................................................
+		   
+		Groovy Simplifies the above pattern matching using "Slashy Strings"
+.............................................................................................
+
+How to write regular expressions using groovy?
+
+Version : 1 - Pattern declaration using slashy string
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+println "Regular Expression-Groovy Implementation"
+//Step 1: declare input string
+def inputString = "hey  hello 0 1, how subramanian , 7m3";
+//pattern:
+// String pattern = "\\d+";  //java syntax of defining pattern
+def pattern = /\d+/ //here we can escape special characters without using special characters
+Pattern compiledPattern = Pattern.compile(pattern);
+Matcher digitMatcher = compiledPattern.matcher(inputString);
+println("Source String " + inputString);
+while (digitMatcher.find()) {
+    println(digitMatcher.group());
+}
+
+Version 2: Replace compile Code:
+.................................
+-Replace Pattern.compile api with ~/d+/
+  
+=> "~" is operator - compile operator,later we will discuss this deeply.
+
+println "Regular Expression-Groovy Implementation"
+//Step 1: declare input string
+def inputString = "hey  hello 0 1, how subramanian , 7m3";
+Pattern compiledPattern = ~/\d+/;
+Matcher digitMatcher = compiledPattern.matcher(inputString);
+println("Source String " + inputString);
+while (digitMatcher.find()) {
+ println(digitMatcher.group());
+}
+
+Version 3 :  slashy +pattern.compile + pattern.matcher
+........................................................
+ (inputString =~/\d+/)
+
+ "=~" - Compile + Match operator.
+
+println "Regular Expression-Groovy Implementation"
+//Step 1: declare input string
+def inputString = "hey  hello 0 1, how subramanian , 7m3";
+def compiledPattern = ~/\d+/;
+def matcher = (inputString =~ /\d+/)
+while (matcher.find()) {
+    println(matcher.group());
+}
+......................................................................................
+
+Coding Challange:
+.................
+Finding all dates in a String and getting
+//the date month and year can be as simple as below
+
+[dd-mm-yyy] - output format
+
+def dates = "28-02-1992 a b c  15-06-1982 15-Apr-1982";
+
+Expected output:
+
+28-02-1992, 15-06-1982
+..............................................................................................
+				dollar SlashyString
+..............................................................................................
+->Multi line + String interpolation
+
+  // - multi line without interploation
+  $/""" xxx """/ multi line with interploation
+
+
+println "Dollar Slashy Strings";
+
+def name ="Subramanian"
+def dollarSlashy = $/ 
+   Hello,$name
+   100
+   prices
+   1
+   groovy
+   34
+/$
+println dollarSlashy
+def matcher = (dollarSlashy =~ /\d+/)
+while (matcher.find()) {
+    println(matcher.group());
+}
+
+
+
