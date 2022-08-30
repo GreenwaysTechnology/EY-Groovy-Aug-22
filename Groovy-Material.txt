@@ -529,7 +529,7 @@ Groovy Language:
 1.6.iterators/loops
 
 .....................................................................................
-				  variable declaration,Type System,literals
+		 variable declara tion,Type System,literals
 .....................................................................................
 
 Groovy is dynamic , static typed programming lanugage.
@@ -1493,6 +1493,1285 @@ def matcher = (dollarSlashy =~ /\d+/)
 while (matcher.find()) {
     println(matcher.group());
 }
+.....................................................................................
+.............................................................................................
+				Number Literals
+.............................................................................................
+
+
+Numbers:
+
+Primitives : 
+  byte,short,int,long
+  float,double
+  boolean
+  char
+Reference types
+  Integer - Wrapper classes
+  java.math.BigDecimal , java.math.BigInteger
+
+def a =100;
+a instanceof Integer
+
+How groovy identifies Integer
+  Integer.MAX_VALUE 
+
+How groovy identifies Long
+  Integer.MAX_VALUE + 1 - posstive
+  Integer.MAX_VALUE - 1 - negative values
+
+Numbers can be represented 
+ -binary
+    -prefx 0b
+
+println("Numbers")
+println "Binary Numbers"
+def a=0b10101111
+println a;
+
+ -octaal
+     -prefix 0
+println "Octal "
+def b = 077;
+println b;
+
+-hexadecimal
+   -prefix  0x
+
+println "Hexa decimals"
+def c = 0x77;
+println c;
+
+
+ -decimals
+
+println "Decimal literals"
+
+def d =10;
+BigDecimal bd =90.89;
+println("$d $bd")
+
+Underscore in literals
+......................
+  when writing long numbers , its harder to read, in order to group long numbers
+ "_" notation is used.
+
+eg: credit card numbers,sss,adharno,bigamount..
+
+
+println "Under scores"
+
+long creditCardNumber = 1234_5678_9012_3456L;
+println creditCardNumber
+////////////////////////////////////////////////////////////////////////////////////////////
+
+Number suffixes:
+
+ float f =10.5f
+
+ f / F - float
+ d / D - double
+ l/L   - long
+ G/g   - BigInteger
+ G/g    -BigDecimal
+ i - Integer
+
+long l = 1233l;
+int  j = 89i;
+.....................................................................................
+.............................*********........................................................
+			Groovy truthy and falsy values
+..............................................................................................
+In Groovy everthing is true execept the below values
+
+falsy values:
+
+1.boolean false
+2.0
+3."" (Empty string)
+4.null 
+5.Empty list => []
+6.Empty Map  => [:]
+
+def a = 100;
+if (a) {
+    println("$a is Valid")
+} else {
+    println("$a is Invalid")
+}
+def b=0
+if (b) {
+    println("$b is Valid")
+} else {
+    ..............................................................................................
+				  Operators
+.............................................................................................
+
+1.Arithmetic operators
+2.Relational Operators
+3.Logical Operators
+4.BitWise operators
+5.Conditional Operators
+6.Object Operators
+7.Regular Expression Operators
+8.Spread Operator
+9.Range Opeator
+10.Spaceship Operator
+11.Subscript operator
+12.Safe index operator
+13.Membership operator
+14.identity operators
+15.coercion operator
+16.Diamond operator
+17.call operator
+..............................................................................................
+					1.Arithmetic operators
+
+-Binary operator
+  Requires two operand
+-Unary operator
+  Requires one Operand
+
+Binary Operator
++ - Addition
+- - Substraction
+* - multiplication
+/ - division
+% - remainder
+** - power operator - groovy operator
+
+println "Arthimetic operators"
+
+def a = 10
+def b = 20;
+
+println "Addition ${a + b}"
+println "Substraction ${a - b}"
+println "Multiplication ${a * b}"
+println "Division ${a / b}"
+println "Remainder ${a % b}"
+println "Power of  ${a**2}"
+println "Unary + ${a++}"
+println "Unary + ${++a}"
+.............................................**************..................................
+				  Assignment Operators
+//single assignment
+def a = 10;
+def b = 20;
+println "$a $b";
+//multiple assignment : java style
+int s = 1, d = 80;
+def x = 1, y = 2;
+println "$x $y";
+//multiple assignment : groovy style
+def (x1, y1, de) = [10, 20, 9];
+println "$x1 $y1 $de";
+//mixed data type in one line
+def (status, today, counter) = [true, "02-02-19", 1];
+println "$status  $today  $counter"
+
+//extra values are left
+def (one, two) = [1, 2, 3, 4, 5];
+println "$one $two";
+
+//lesser values but extra variable and its value is null
+def (xy, xz, xa) = [1, 3];
+println "$xy $xz $xa";
+//def (name,age,city)//error
+def (name, age, city) = []; //empty brackets, all variables gets null as default value
+println "$name $age $city"
+.............................................................................................
+			Assignment and Artihmetic:
+............................................................................................
+
+ def a =90;
+ def res = a + 1
+ def a+=3
+
++=
+-=
+*=
+/=
+%=
+**=		
+
+//assignment and arthimetic
+def qty = 100;
+def qtyCounter = qty + 1;
+println("QtyCounter $qtyCounter")
+qtyCounter +=1 // short cut for the above
+println("QtyCounter $qtyCounter")
+
+..............................................................................................
+		Relational Operators: The Result would be boolean
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+== equal
+!= not equal - different
+< lessthan
+> greater than
+<= less than or equal
+>= greater than or equal
+
+def a = 10;
+def b = 10;
+println a == b;
+println a < b;
+println a <= b;
+println a > b;
+println a >= b;
+println a != b;
+////////////////////////////////////////////////////////////////////////////////////////
+Logical Operators: boolean result
+...........................................................................................
+
+&&  - logical "and"
+||  - logical "or"
+!   - logical "not"
+
+These operators works based on truth table
+
+and
+0 0  - 0
+1 0  - 0
+0 1  - 0
+1 1  - 1
+
+Or
+0 0  - 0
+1 0  - 1
+0 1  - 1
+1 1  - 1
+
+!
+0 - 1  
+1  -0
+
+
+
+def isActive = true;
+def isEnabled = true;
+println " && => " + isActive && isEnabled; //true
+println " || => " + isActive || isEnabled; //true
+println " !  => " + !isEnabled; //false
+
+def name = ""   //false
+def city = "Coimbatore";  //true
+println name && city; //?
+
+def start = 0; //0 false
+def stop = 10; //10 true
+println start || stop; // true
+
+def isEmpty; //null
+println isEmpty;
+println !isEmpty
+isEmpty = "hello"
+println !isEmpty
+..............................................................................................
+///////////////////////////////////////////////////////////////////////////////////////////
+
+Bitwise and bit shift operators:
+.................................
+
+Bitwise operators are used to maniuplate bits - based on 2's compliement theories.
+
+& - bit wise and
+| - bit wise or
+~  - bitwise negation
+
+bit shit operators
+
+<<  -left shift
+>> -right shift
+>>> - right shift unsigned.
+////////////////////////////////////////////////////////////////////////////////////////////
+				Conditional Operators
+............................................................................................
+
+1.not operator - !
+2.Tenary operator - ?:
+3.Elvis Operator  - ?
+
+Not Operator : (!)
+
+Not operator is represented with an exclamation mark and inverts the result of underlying boolean expression
+
+!true = false
+!false = true
+!''  = true
+
+Tenary Operator:
+  //Tenary operator
+
+def a = 10
+def b = 50
+//compare and say some result
+if (a == b) {
+    println("A and B are equal")
+} else {
+    println("A and B are not equal")
+}
+//the above code can be simplified using tenary operator
+
+(a == b) ? println("A and B are equal") : println("A and B are not equal")
+
+def res = (a == b) ? "A and B are equal " : "A and B are not equal"
+println(res)
+
+//tenary with other booleans
+
+def name = "Subramaian";
+def response = name ? "Hello $name" : "Hello!"
+println(response)
+
+............................................................................................
+				Elvis Operator
+............................................................................................
+The "Elvis operator" is a shortening of the ternary operator. One instance of where this is handy is for returning a 'sensible default' value if an expression resolves to false-ish
+
+def a=0
+
+ if a is true, print a's value , else assign our own default value.
+
+
+Elvis operator is used to assign default values if a variable is false.
+?: =>Elvis operator
+
+//Elvis operator is used to assign default values if a variable is false.
+
+def counter; //null
+//if counter is false,then initalize 1 else the value of the counter
+println counter ?: 1;
+
+
+//!
+def myvar = true;
+println !myvar;
+//?:
+//where ever if ..else lader you can replace with ?:
+def a = 10;
+def b = 20;
+if (a == b) {
+    println "Equal"
+} else {
+    println "Not equal"
+}
+a == b ? println("Equal") : println("Not Equal");
+def result = a == b ? "Equal" : "Not Equal";
+println result
+def name = "subramanian";
+def found = name ? "Name Found $name" : "Name not Found"
+println found;
+//////////////////////
+def price;
+//Using tenary
+println price ? price : 10;
+//Using elivs
+println price ?: 10
+
+def totalPrice = price?:10 * 100;
+println "Total Price $totalPrice"
+..............................................................................................
+			Regular Expression Operators
+..............................................................................................
+
+Pattern Operator : ~
+~/pattern/ ->Pattern
+
+//~Pattern operator
+def pattern = ~/\d+/
+println pattern instanceof Pattern
+
+Find operator:=~
+
+Alternatively to building a pattern, you can directly use the find operator =~ to build a java.util.regex.Matcher instance
+
+=~ ->Returns Matcher Instance
+
+def text="mytext"
+//=~ Find operator which returns Matcher
+def matcher = (text =~/\d+/);
+println matcher instanceof Matcher; 
+
+
+Match operator:
+..............
+
+ ==~ Matcher Operator : returns boolean
+ !=~ Matcher Operator : returns boolean
+
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+//
+def pattern = ~/\d+/
+println pattern instanceof Pattern
+
+def text="mytext 45 67"
+//=~ Find operator which returns Matcher
+def matcher = (text =~/\d+/);
+println matcher instanceof Matcher;
+
+// ==~ : match operator which returns boolean
+
+def result =  (text ==~/\d+/)
+println(result)
+..............................................................................................
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+                                          Conditional Strucutures
+/////////////////////////////////////////////////////////////////////////////////////////////
+def isActive = true;
+if (isActive) {
+    println "Active"
+} else {
+    println "Not Active"
+}
+def x = "hello";
+def result = "";
+
+switch (x) {
+    case "foo":
+        result = "foo value"
+        break
+    case "bar":
+        result = "bar value"
+        break
+    case 122:
+        result = "some numbers"
+        break
+    case true:
+        result = "some boolean"
+        break
+    case Integer:
+        result = "Integer value"
+        break
+    case ~/fo*/:
+        result = "Regular expression value"
+        break
+    case Number:
+        result = "Number value"
+        break;
+        default:
+        result = "No match found"
+        break;
+}
+println result;
+..............................................................................................
+/////////////////////////////////////////////////////////////////////////////////////////////
+				Iterators - Loops
+/////////////////////////////////////////////////////////////////////////////////////////////
+for (int i = 0; i < 10; i++) {
+    println i;
+}
+for (def i = 0; i < 10; i++) {
+    println i;
+}
+
+def x = 0
+def y = 5
+while (y-- > 0) {
+    x++
+    println "Y $y"
+}
+println x;
+//do ..while
+def counter = 5;
+def fact = 1;
+do {
+    fact *= counter--
+} while (counter > 1)
+println fact
+.............................................................................................
+Coding Challanges:
+..................
+
+Q:1.find even numbers from 0 to 1000 range.
+
+
+Q.2.find Grade for given score
+
+ score is greater than 95 - A
+
+ 80 tO 95 - Grade B
+
+ 60 to 80 -Grade C
+ 
+ 50 TO 60 - Grade D
+ 
+ less THAN 50 - F 
+.....................................................................................
+			 Groovy Scripting
+
+Script is a file/program , collection of variables and methods(functions)
+
+ScriptFile Syntax:
+.................
+
+ScriptFile.groovy
+
+def firstName='Subramanian'
+
+
+|
+After compilation
+
+ScriptFile.class
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
+import groovy.lang.Binding;
+import groovy.lang.Script;
+import org.codehaus.groovy.runtime.InvokerHelper;
+
+public class ScriptFile extends Script {
+    public ScriptFile() {
+    }
+
+    public ScriptFile(Binding context) {
+        super(context);
+    }
+
+    public static void main(String... args) {
+        InvokerHelper.class.invoke<invokedynamic>(InvokerHelper.class, ScriptFile.class, args);
+    }
+
+    public Object run() {
+        Object firstName = "Subramanian";
+        return firstName;
+    }
+}
+............................................................................................
+				Groovy Scripting - methods
+...........................................................................................	-collection of variables and methods(functions).
+
+How scripts are working?
+
+ When we write script , groovy creates a class "ScriptClass" , will have main method and run method.
+ The name of the script file  will go as name of the script class name.
+
+eg:
+
+Written by you?
+
+ HelloWorld.groovy
+
+ println "Hello Script"
+
+Groovy will write like below
+
+class HelloWorld extends Script{
+
+    //method called run
+    def run(){
+      println "Hello Script"
+   }
+ 
+ static void main(String[]args){
+  
+      InvokerHelper.runScript(HelloWorld,args)
+ }
+
+}
+methods:
+........
+
+-methods are going to group biz/application logic.
+
+
+Syntax:
+
+ 1.static typed syntax ; looks like a java syntax
+
+   returntype methodName(args){
+     //method body
+     return statement
+   }
+   void sayHello(){ 
+
+
+   }
+2. dynamic typed syntax
+
+    def methodName(args){
+      //method body
+    }
+
+
+eg;
+Static Typed:Java Style
+//methods : group biz logic
+
+//static typed methods - style of static typed methods
+//method declaration
+void sayHello() {
+    println("Hello Java Style")
+}
+//method invocation
+sayHello();
+
+//parameters and args
+
+//name, message are args
+void sayWelcome(String name, String message) {
+    println("$message $name")
+}
+
+sayWelcome("Subramanian", "Hello") // parameters
+//sayWelcome("Subramanian",34) // //wrong
+
+//if method returns values
+int add(int a, int b) {
+    int c = a + b
+    //return a + b // you are sending output to outside method
+    return c
+}
+
+int result = add(10, 10) //  calling method
+println("The add Result is $result")
+
+//Return string
+String getName() {
+    return "Subramanian"
+}
+
+String name = getName()
+println(name)
+//biz logic with return
+boolean login(String name, String password) {
+    if (name == "admin" && password == "admin") {
+        return true
+    }
+    return false
+}
+
+boolean isValid = login("admin", "admin")
+if (isValid) {
+    println("Login success")
+} else {
+    println("Login Failed")
+}
+//using tenary operator
+isValid ?  println("Login success") :  println("Login Failed")
+
+login("foo", "foo") ? println("Login success") : println("Login Failed")
+.............................................................................................
+			Dynamic Typed methods-parameters and args
+.............................................................................................
+//Groovy Style methods : dynamic typed
+
+def sayHello(){
+    println("Hello Groovy method")
+}
+sayHello()
+//args and parameters : args are style strong typing
+def sayWelcome(String name,String message){
+    println("$message $name")
+}
+sayWelcome("Subramanian","Hello")
+//args and parameters with dynamic typed
+def sayHai(def name){
+   println("Hai $name")
+}
+sayHai("Subramanian")
+//with def keyword
+def doStuff_(def myvar){
+    println("My Variable value is $myvar")
+}
+//without def keyword also valid
+def doStuff(myvar){
+    println("My Variable value is $myvar")
+}
+//you can pass any type of value
+doStuff("I am passing string")
+doStuff(1000)
+doStuff(10.78)
+doStuff(true)
+doStuff() //no value means null
+
+///drawbacks or trade off dynamic typed parameters
+def calculate(a,b){
+    def c = a * b
+    println("The Result is $c")
+}
+calculate(10,10)
+calculate(34.68,89.90)
+//calculate(true , false) // you will get runtime error
+..............................................................................................
+			  How to fill with default values
+//Groovy allows to skip parameters
+
+def sayHello_(String name) {
+    println("name $name")
+}
+
+def sayHello(name) {
+    println("name $name")
+}
+//passing parameters
+sayHello("Subramanian")
+//skip parameters
+sayHello()
+
+//what if i dont pass value, how to replace null with some meaningful values
+//default values
+def sayHai(name = "Foo") {
+    println("Hai $name")
+}
+
+sayHai("Ram")
+sayHai()
+
+def add_(int a = 0, int b = 0) {
+    int c = a + b
+    println("C is $c")
+}
+
+def add(Integer a = 0, Integer b = 0) {
+    int c = a + b
+    println("C is $c")
+}
+
+add(1, 3)
+add()
+//add("test")
+............................................................................................
+				Variable Args - VarArgs
+............................................................................................
+
+what if i want a method, that method must take n-number of args.
+ What if i pass more parameters, but i have less args.
+
+
+
+// i have method , but i has less args, dynamically i pass more parameters : VarArgs
+
+def log(String ...args){
+    println args
+}
+log('This is warning')
+log('This is warning','This is error','This is something')
+............................................................................................
+					
+				Method Return values and types
+.............................................................................................
+
+type method(){}
+
+def method(){}
+
+String sayHello() {
+    return 'Hello';
+}
+
+//def return values
+//def return values
+
+def sayHello() {
+    return "Hello"
+}
+
+println(sayHello())
+
+def getIntValue() {
+    return 100
+}
+
+println(getIntValue())
+
+def calculate_(int a = 0, int b = 0) {
+    return a + b  // expression
+}
+
+def calculate(int a = 0, int b = 0) {
+    return "The result is ${a + b}"  // expression
+}
+
+println(calculate(13, 90))
+
+//without return statement indicates that method by default returns
+
+String getName_() {
+    def firstName = 'Subramanian'
+    def lastName = 'Murugan'
+    def fullName = "$firstName $lastName"
+    //old style
+    return fullName
+}
+
+String getName() {
+    def firstName = 'Subramanian'
+    def lastName = 'Murugan'
+    def fullName = "$firstName $lastName"
+}
+
+println(getName())
+
+def getFullName() {
+    def firstName = 'Subramanian'
+    def lastName = 'Murugan'
+    def fullName = "$firstName $lastName"
+}
+
+println(getFullName())
+//return values with expressions and hardcoded values
+
+def getPrice() {
+    //here 100 to be returned
+    100
+}
+
+println(getPrice())
+
+def getTotalPrice() {
+    def qty = 100
+    def price = 900
+    qty * price
+}
+
+println(getTotalPrice())
+
+def iterate() {
+    for (def i = 0; i < 10; i++) {
+        println("I $i")
+    }
+}
+
+def value = iterate()
+println("Returned value is $value")
+//empty method
+def empty() {
+
+}
+
+def emptyResult = empty();
+println("Empty Method Result $emptyResult")
+
+//logic
+def login(String name = "", String password = "") {
+    (name == "admin") && (password == "admin")
+}
+
+login("admin", "admin") ? println("Login is Success") : println("Login is failed")
+login("admin", "foo") ? println("Login is Success") : println("Login is failed")
+
+//Receive the parameter and return the same
+def getStockvalue(stock) {
+    stock
+}
+println(getStockvalue(100))
+.....................................................................................
+.............................................................................................
+			 Object oriented Programming and Implementation
+.............................................................................................
+
+Any PL deals two things
+
+1.Data
+2.methods/functions
+
+What can be data?
+ Numbers,Characters,booleans
+
+You can consider any thing as data.
+
+Program is collection of instructions (variables,expressions,literals,methods)
+
+can you consider method as data?
+
+ You may be thinking, No, data means need to be stored inside variable
+eg:
+ int a=10
+
+ can i store method inside variable? 
+   yes or no. 
+ Yes -that leads functional programming
+...................................................................................
+
+  data + methods
+
+Core concepts:
+1.State
+   Data
+2.Behaviour
+  methods
+
+1.Abstraction
+2.Encapsulation
+3.Modularity
+4.Hierachy
+5.Typing
+6.Persistency
+7.Concurrency
+
+.............................................................................................
+				  Abstraction
+.............................................................................................
+
+What is abstraction?
+   "Focus what is necessary ,Dont focus what is not necessary"
+
+The real world object may have been associated with million properties, but all properties not necessary for all types of domains.
+
+Filtering data according to domain which is called abstraction.
+
+Abstraction helps to capture right data for right domain.
+
+How to apply /map/ implement abstraction in programming languages?
+
+1.Compile Time/Source code
+
+ =>classes
+
+
+2.Runtime/Compiled  Code
+
+ =>Object
+
+What is class ?
+
+  It is container/unit to capture domain data.
+
+
+What is abstraction?
+   "Focus what is necessary ,Dont focus what is not necessary"
+
+The real world object may have been associated with million properties, but all properties not necessary for all types of domains.
+
+Filtering data according to domain which is called abstraction.
+
+Abstraction helps to capture right data for right domain.
+
+How to apply /map/ implement abstraction in programming languages?
+
+1.Compile Time/Source code
+
+ =>classes
+
+
+2.Runtime/Compiled  Code
+
+ =>Object
+
+What is class ?
+
+  It is container/unit to capture domain data.
+
+Task: Caputure employee details.
+
+Employee.groovy
+
+package com.airbus.oo.abstraction
+
+class Employee {
+    //state -data 
+    int id
+    String firstName
+    String lastName
+    double salary
+    String department
+    String role
+}
+
+
+int   a =      10;
+ |    |         |
+Type variable  value
+
+//Object Creation and syntax
+
+Employee employee = new     Employee()
+ |         |         |         |
+Type     Variable  keyword  constructor call
+
+Type classification:
+
+1.primitives - int,float...
+2.Reference type - Object type
+  Employee....
+
+Types of variables
+
+primtive variables - variables are declared with primitive types
+Reference variables -variables are declared with Reference types
+
+
+Object Properties
+    int id
+    String firstName
+    String lastName
+    double salary
+    String department
+    String role
+
+in order to access object properties,Groovy Offers object access operator.
+
+"." -  dot operator /  member access operator
+
+How to use this operator
+
+ referencevariable.property
+eg:
+ employee.id
+
+import com.airbus.oo.abstraction.Employee
+
+//Create Object
+
+//Static typed way of creating Object
+Employee employee = new Employee()
+//access object properties
+println("Employee Id : ${employee.id}")
+println("Employee FirstName  : ${employee.firstName}")
+println("Employee LastName : ${employee.lastName}")
+println("Employee Salary : ${employee.salary}")
+println("Employee Deparment : ${employee.department}")
+println("Employee Role : ${employee.role}")
+
+//Dynamic typed way of creating object
+def emp = new Employee()
+println("Employee Id : ${emp.id}")
+println("Employee FirstName  : ${emp.firstName}")
+println("Employee LastName : ${emp.lastName}")
+println("Employee Salary : ${emp.salary}")
+println("Employee Deparment : ${emp.department}")
+println("Employee Role : ${emp.role}")
+.............................................................................................
+				   Object
+.............................................................................................
+
+What is Object?
+
+There are two views:
+
+1.DOMAIN View /Realworld View
+  
+Object is tangable enity,you should able touch , feel, it.
+
+Can you describe "air" as object?
+ Yes,No
+can you describe "god" as object?   
+  Some people say there is god
+  Some people say there is no god
+Which is true?
+
+According to grady, "Object can be any thing/every thing,but that should be in the problem domain"
+
+eg:
+I am building software for weather forecasting system, in this system which primary entity?
+ "Air"
+According to weather forecasting system,"Air System".
+
+I am building banking software , in this domain "Air is not Object". 
+
+..............................................................................................
+
+object oriented analysis and design:
+
+Process:
+1.collect requirement - functional req
+2.design the system based on requirement
+  2.1.Identify the objects 
+      Banking 
+      	-Customer
+        -Account 
+        -Loan
+3.Apply abstraction
+   Customer - customerId/AccountNo, firstName,lastName,dob,mobileNo....
+
+4.Start coding 
+  Abstraction - classes
+
+class is a blue print of realworld Object
+.
+
+2.Program View    
+
+ In order to understand what is object in groovy/java?
+
+You need to understand some internals of JVM.
+
+What is JVM?
+   Process which hosts groovy/java apps
+
+
+ Employee emp = new Employee() ; // Object creation /Object instantation
+
+Object is memory, dynamic memory, allocated inside heap segment of JVM.
+
+new - operator , memory allocation 
+
+Employee employee=new Employee() - function call,method call
+  |         |
+Type        memory Handler - reference(pointer) variable
+
+..............................................................................................
+				 Object = State(data)  and Behaviour(methods)
+..............................................................................................
+
+How state is changed via methods?
+
+//src/Calculator.groovy
+package com.airbus.oo.abstraction
+
+class Calculator {
+    //state
+    int result
+    int a, b
+    //methods
+    int add(int a, int b) {
+        this.a = a
+        this.b = b
+        this.result = a + b
+        return result
+    }
+}
+
+src/CalculatorMain.groovy
+
+import com.airbus.oo.abstraction.Calculator
+def calc= new Calculator();
+def res = calc.add(10,10)
+println("The result is $res")
+.............................................................................................
+Reference variable:
+
+ Variable which points the address of object
+
+ def calc= new Calculator();
+here calc is reference variable
+
+Types of reference variable:
+
+1.custom reference variable
+
+ def calc= new Calculator();
+here calc is reference variable
+
+2.implicit reference variable
+ "this" -  implicit reference variable which points the object itself 
+ "super" - implicit reference variable which points the super object
+
+Types of variables;
+...................
+
+Types of variables can be classified according to various category.
+
+1.based on data type.
+  1.1.reference variable ... Employee,Calcuator...
+  1.2.primtive variables - int,float...
+
+2.based on where we have declared variable
+
+  2.1.inside class
+	with any type(reference/primitive),inside class are called as "instance variables"
+ eg :
+      int a;
+      String str;
+
+  2.2.inside class with one keyword(static)
+       with any type(reference/primitive),inside class with static keyword are called as "class variables/static variables"
+      static int a 
+      static String str
+
+
+  3.1.inside method
+      def doStuff(int b){
+         int a =0
+      }
+   here a and b are part of method -  called as "local variables"
+   
+ 
+When to use "this"?
+
+ int add(int a, int b ){ //local variables {
+        this.a = a // local variable a's value is assigned to instance variable
+        this.b = b
+       // a=a //lvalue requ
+        this.result = a + b
+        return result
+    }
+
+ here in order to avoid confusion to the compiler that lefside is instance variable and right side is local variable
+
+
+package com.airbus.oo.abstraction
+
+class Calculator {
+    //state
+    //instance variables
+    int result
+    int a, b //instance
+    //methods
+    int add(int a, int b ){ //local variables {
+        this.a = a // local variable a's value is assigned to instance variable
+        this.b = b
+       // a=a //lvalue requ
+        this.result = a + b
+        return result
+    }
+    //groovy syntax
+    def multiply(a=0,b=0){
+        a*b
+    }
+}
+
+import com.airbus.oo.abstraction.Calculator
+
+
+def calc= new Calculator();
+def res = calc.add(10,10)
+println("The result is $res")
+
+println(calc.multiply(10,10))
+println(calc.multiply())
+
+
+Note: all method syntax discussed as part of script, can be used inside class directly.
+..............................................................................................
+classes are in java language:
+
+1.class is used to represent object template.
+2.class contains variables and methods
+3.class can also contain another class,interfaces ; inner classes
+4.Every java program must start with class definition only.
+5.Every program can have mulitple java classes , but recommended is only one class per   file/program
+6.Every java program must have main method.
+
+Objects:
+
+1.Runtime representation of class we call "Object"
+2.Object means , memory representation of class.
+3.We can create more objects from a single class, but each object has its own memory address
+4.Object is pointed by a variable called "reference variable" ; pointer to object
+5.object contains methods, and variables called instance members.
+..................................................................................
+
+
+What is Bean?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
