@@ -2749,9 +2749,1635 @@ Objects:
 4.Object is pointed by a variable called "reference variable" ; pointer to object
 5.object contains methods, and variables called instance members.
 ..................................................................................
+What is Bean / Java Bean?
+
+JCP -Java Bean - spec.
+
+class A {
+ int id
+}
+
+A a = new A()
+a.id
+
+class A {
+ int id
+ void initId()
+}
+a.initId()
+Objects:
+
+1.Runtime representation of class we call "Object"
+2.Object means , memory representation of class.
+3.We can create more objects from a single class, but each object has its own memory address
+4.Object is pointed by a variable called "reference variable" ; pointer to object
+5.object contains methods, and variables called instance members.
+............................................................................................
+				 Groovy Beans
+............................................................................................
+
+Java Bean:
+  Java Object is other wise called as Java Bean
+
+-It is a standard  or spec for declaring a class and create object.
+
+Java Bean Spec:
+...............
+ How to declare class,fields(variables, methods)
+
+How to declare state(variables), and how to initalize them?
+
+1. inside class - hardcoded values
+
+package com.airbus.oo.objectinit;
+
+public class Product {
+    //state
+    int id =1;
+    String name="Phone";
+
+}
+   Product product = new Product();
+        System.out.println(product.id);
+        System.out.println(product.name)
+
+2. after object creation using reference variables
+public class Product {
+    int id;
+    String name;
+}
+        Product product = new Product();
+        //after object creation
+        product.id = 1;
+        product.name = "Phone";
+
+        System.out.println(product.id);
+        System.out.println(product.name);
+
+3. during object creation using "constructors"
+
+What is constructor?
+   It is special method like other methods.
+
+Features constructor:
+
+1.constructors are only used for initalization of state , not for holding biz logic
+2.constructors name should match class name.
+3.constructors may take arg 
+4.constructors never return any value.
+5.we can have many constructors inside single class to initalize the objects in different ways.
+
+package com.airbus.oo.objectinit;
+
+public class Product {
+    //state
+//    int id =1;
+//    String name="Phone";
+    int id;
+    String name;
+
+    //no arg - no arg constructor
+    public Product() {
+        this.id = 0;
+        this.name = "defaultProduct";
+    }
+
+    //with id and name
+    public Product(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Product(int id) {
+        this.id = id;
+        this.name = "defaultProduct";
+
+    }
+
+    public Product(String name) {
+        this.name = name;
+        this.id = 199;
+    }
+}
+package com.airbus.oo.objectinit;
+
+public class ObjectInitMain {
+    public static void main(String[] args) {
+//        Product product = new Product();
+//        System.out.println(product.id);
+//        System.out.println(product.name);
+
+//        Product product = new Product();
+//        //after object creation
+//        product.id = 1;
+//        product.name = "Phone";
+//
+//        System.out.println(product.id);
+//        System.out.println(product.name);
+
+        //using constructor
+        Product product = new Product();
+        System.out.println(product.id);
+        System.out.println(product.name);
+        //arg constructor
+        Product product1 = new Product(20,"Books");
+        System.out.println(product1.id);
+        System.out.println(product1.name);
+
+        Product product2 = new Product(30);
+        System.out.println(product2.id);
+        System.out.println(product2.name);
+
+        Product product3 = new Product("Food Items");
+        System.out.println(product3.id);
+        System.out.println(product3.name);
+    }
+}
+..............................................................................................
+			Object state initalization standards - java Bean standards
+.............................................................................................
+
+=> state variables should not be accessed outside class directly
+
+       Product product = new Product();
+       //which is not standard way of accessing variables
+       product.id = 1;
+       product.name = "Phone";
+
+state variables must be accessed via "accessor and mutatators - setters and getters"
+
+Setters and getters:
+=>methods are used to intialize and read instance variables.
+
+Setters Rules:
+
+1.should start with public
+public 
+2.method must have void return type
+3.method name must start with "set" convention
+ public void set
+4.method name must be name of the instance variable
+  public void setId
+4.method name must be camel Case - smallLetterUpperCase
+ public void setId()
+
+5.method must take arg which must match instance variable.
+public void setId(int id){
+        
+    }
+6.inside that method you have to initalize the instance variable using this keyword
+
+7.For every instance variable we must have "setter"
+
+8.All instance variables must be marked "private"
 
 
-What is Bean?
+getters : to read value
+
+1. start with public 
+2. method must return have type -  type of variable
+3. start with "get" + variable Name ->camelCase
+4. must not have any args
+5. must return instance variable
+
+package com.airbus.oo.objectinit;
+
+public class Product {
+    //state
+//    int id =1;
+//    String name="Phone";
+    private int id;
+    private String name;
+
+    //no arg - no arg constructor
+    public Product() {
+        this.id = 0;
+        this.name = "defaultProduct";
+    }
+
+    //with id and name
+    public Product(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Product(int id) {
+        this.id = id;
+        this.name = "defaultProduct";
+
+    }
+
+    public Product(String name) {
+        this.name = name;
+        this.id = 199;
+    }
+
+    //setters and getters -are used to read and write data.
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId(){
+        return id;
+    }
+    public String getName(){
+        return name;
+    }
+
+}
+package com.airbus.oo.objectinit;
+
+public class ObjectInitMain {
+    public static void main(String[] args) {
+//        Product product = new Product();
+//        System.out.println(product.id);
+//        System.out.println(product.name);
+
+//        Product product = new Product();
+//        //after object creation
+//        product.id = 1;
+//        product.name = "Phone";
+//
+//        System.out.println(product.id);
+//        System.out.println(product.name);
+
+//        //using constructor
+//        Product product = new Product();
+//        System.out.println(product.id);
+//        System.out.println(product.name);
+//        //arg constructor
+//        Product product1 = new Product(20,"Books");
+//        System.out.println(product1.id);
+//        System.out.println(product1.name);
+//
+//        Product product2 = new Product(30);
+//        System.out.println(product2.id);
+//        System.out.println(product2.name);
+//
+//        Product product3 = new Product("Food Items");
+//        System.out.println(product3.id);
+//        System.out.println(product3.name);
+
+        Product product = new Product();
+        product.setId(1);
+        product.setName("Phone");
+        System.out.println("Id " + product.getId());
+        System.out.println("Name " + product.getName());
+    }
+}
+..............................................................................................
+
+package com.airbus.oo.objectinit;
+
+public class Patient {
+    private int id;
+    private String name;
+    private String city;
+    private String mobileNo;
+    private String email;
+
+    public Patient() {
+
+    }
+
+    public Patient(int id, String name, String city, String mobileNo, String email) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+        this.mobileNo = mobileNo;
+        this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getMobileNo() {
+        return mobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        this.mobileNo = mobileNo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    //setters and getters
+
+    //constructors
+}
+
+Patient patient = new Patient();
+        patient.setId(1);
+        patient.setName("Ram");
+        patient.setCity("Coimbatore");
+        patient.setEmail("ram@gmail.com");
+        patient.setMobileNo("99999999");
+        System.out.println(patient.getId() + " " + patient.getName() + " " + patient.getEmail());
+    
+..............................................................................................
+/////////////////////////////////////////////////////////////////////////////////////
+
+setters vs constructors:
+
+Both recommened:
+
+1.Use setter once object is created. lazy initalization
+2.Use constructor during object creation; Eagar intialization
+//////////////////////////////////////////////////////////////////////////////////////////
+			Groovy and Object Oriented Programming
+
+1.Groovy uses Groovy Standards
+   ->Groovy Bean standards
+
+1.declare class
+2.create object
+
+package com.airbus.oo.groovybeans
+
+//by default groovy class is public classes
+class Message {
+    //state  // here variables must not be marked private,
+    // the reason groovy generates , setters and getters for us
+    String message
+    String to
+    String from
+    //can i declare the variables using def keyword : yes, but not recommended
+//    def message
+//    def to
+//    def from
+}
+import com.airbus.oo.groovybeans.Message
+
+def msg = new Message()
+//setters
+msg.message = "Hello" //groovy interally calls message.setMessage()
+msg.to = "John"
+msg.from = "Subramanian"
+//getters
+println("Message ${msg.message} ${msg.to} ${msg.from}")
+.............................................................................................
+			  Groovy Beans and Constructors
+.............................................................................................
+
+Groovy generates even constructors for us , you dont need to have constructors.
+
+Constructors are generated based on 'key:value' pair.
+
+//key:value ; key-instance variable; value ; variable value
+def msg1 = new Message(message: "Hai", to: "Foo", from: "Bar")
+println("Message ${msg1.message} ${msg1.to} ${msg1.from}")
+
+def msg2 = new Message(message: "welcome")
+println("Message ${msg2.message} ${msg2.to} ${msg2.from}")
+.............................................................................................
+				Object Operators:
+.............................................................................................
+
+1.Direct field access operator:
+
+ It is used to access fields
+
+field:
+  - It is an instance variable declared inside class
+
+
+"." - field access operator.
+    internally triggers getter
+".@" - field access operator.
+    if you want to access without getter.
+
+
+
+class Person {
+    int id;
+}
+
+def person = new Person(id:100);
+println person.id;
+
+person.id ----calls person.getId() => which calls getter method
+
+println person.@id -Which access id property directly
+.............................................................................................
+				Default Values for Object
+.............................................................................................
+
+values not initalized for an instance variable via  hardcoded inside class or even via setters or constructors or outside class.
+
+
+if you declare any variable whether it is primitive or reference inside a class.
+  Those variables are called as "instance variables".
+
+if you declare any variable whether it is primitive or reference inside a class with static keyword.
+  Those variables are called as "class  variables". static String varName=value
+
+Any variable has default value:
+
+integer family
+  0
+floating family
+ 0.0
+boolean family
+ false
+Reference types - String,Employee....
+ null
+
+class Person {
+    int id;
+    String name;
+    boolean  isActive;
+    double pointers;
+
+}
+
+def person = new Person();
+println person.id;
+println person.@id
+println person.name
+println person.isActive
+println person.pointers
+
+output:
+
+0
+0
+null
+false
+0.0
+..............................................................................................
+				    null
+
+What is null?
+    "It is also one of the value".
+It is assigned to a variable and its type should be reference type.
+null is assigned for an reference variable when the variables does not point valid memory address
+
+if you access any property based on null, "The jvm will throw the error called "NullPointerException", Your app will stop functioning.
+  
+
+package com.airbus.oo.groovy.nullvalues
+
+class Product {
+    int id
+    String name
+}
+import com.airbus.oo.groovy.nullvalues.Product
+
+
+//product variable here not pointing any valid memory address
+Product product=null
+println(product.id)
+
+//here you have initalized the variable called "product1 with valid Memory address"
+Product product1 = new Product()
+product1.id =1
+println(product1.id)
+
+Caught: java.lang.NullPointerException: Cannot get property 'id' on null object
+java.lang.NullPointerException: Cannot get property 'id' on null object
+	at NullMain.run(NullMain.groovy:6)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+
+...........................................................................................
+				How to handle null in groovy
+...........................................................................................
+
+How to safely avoid NullpointerException?
+
+Groovy provides an operator called 
+
+ "safe navigation operator":
+      ?.
+
+eg:
+  person1?.name
+
+
+import com.airbus.oo.groovy.nullvalues.Product
+
+
+//product variable here not pointing any valid memory address
+Product product = null
+//println(product.id)
+//safe navigation operator will safely handle null errors
+//def res = product?.id
+//println("Result ${res}") //null
+//Product product = new Product(id:1000)
+
+if (product?.id) {
+    println(product.id)
+} else {
+    println("No Product Id")
+}
+//using tenary we can give default values
+
+println(product?.id ? product.id : 10)
+
+//using elvish we can give default values
+println(product?.id ?: 10)
+
+
+//here you have initalized the variable called "product1 with valid Memory address"
+Product product1 = new Product()
+product1.id = 1
+println(product1.id)
+..............................................................................................
+				Method Pointer Operator
+.............................................................................................
+The method pointer operator (.&) can be used to store a reference to a method in a variable.
+in order to call it later.
+
+package com.airbus.oo.groovy.methodreference
+
+class Greeter {
+    def sayHello(){
+        "Hello"
+    }
+}
+import com.airbus.oo.groovy.methodreference.Greeter
+
+def greeter= new Greeter()
+//method is called
+println(greeter.sayHello()) //direct method call
+
+//method can be stored inside variable and later it can be called.
+def hai = greeter.&sayHello
+println(hai())
+.............................................................................................
+			 Object DeStructuring
+
+In General How object properties are accessed?
+
+referencevariable.propertyName 
+
+ 
+Anthoer way of  Extracting object properties.
+
+Rules;
+-in order to implement object destructuring, getAt method must be given
+-returns variable type /def 
+-takes index as arg
+-write a logic to assign index  based properties
+package com.airbus.oo.groovy.objectdestructuring
+
+class Coordinates {
+    double latitutde;
+    double longitude;
+    //object destructing api
+    def getAt(int idx) {
+        if (idx == 0) latitutde
+        else if (idx == 1) longitude
+        else throw new Exception("Property not found")
+    }
+}
+
+import com.airbus.oo.groovy.objectdestructuring.Coordinates
+
+def coordinate = new Coordinates(latitutde: 12, longitude: 45)
+println(coordinate.latitutde)
+
+def (lat, lng) = coordinate
+println("$lat $lng")
+...................................................................................
+				Encapsulation
+...................................................................................
+It is a feature of OO, talks about , how to prevent code sharing.
+
+What is code :
+  collection of classes
+  class is having fields and methods, constructors
+
+In large application , we create many classes, we need to set some of rules how to share code.
+
+.............................................................................................
+				Encapsulation
+.............................................................................................
+
+It is a feature of OO, talks about , how to prevent code sharing.
+
+
+ It is a feature of OO, talks about , how to prevent code sharing.
+
+What is code :
+  collection of classes
+  class is having fields and methods, constructors
+
+In large application , we create many classes, we need to set some of rules how to share code.
+
+
+How to restrict code access?
+
+ java/groovy provides keywords 
+   -private,default,public,protected
+
+These keywords are used to control code sharing
+
+ private - means no body can access expect the current class
+ private is used for instance variables and instance methods.
+
+
+In groovy:
+ private variables are not recommended to be treated as object fields.
+
+if you declare private, groovy wont generate setter and getters.
+private variables are by default converted into public.
+private methods are by default converted into public.
+
+
+if you tell, no setters and getters will be generated, if dont want setter and getter 
+you use public keyword.
+
+default: no modifer is told
+
+     String city; - public 
+
+protected: used inside inheritance
+
+
+classes are by default public without public keyword
+
+User.groovy  - scope is public
+class User{}
+
+User.java
+class User {} - scope is default-package level
+..............................................................................................
+
+				  Hierachy
+
+common Code sharing across the class and objects
+
+Types of hierachy
+
+1.has-a - composition - runtime hierachy
+2.is-a - inheritance - compile time heriachy
+
+package com.ey.oo.hasa
+
+class Address {
+    String city
+    String zipcode
+    String state
+}
+package com.ey.oo.hasa
+
+class Employee {
+    int id
+    String name
+    double salary
+    //has a
+    Address address
+}
+import com.ey.oo.hasa.Address
+import com.ey.oo.hasa.Employee
+
+def emp = new Employee(
+        id: 1,
+        salary: 50000,
+        name: 'Subramanian',
+        address: new Address(
+                city: 'Coimbatore',
+                state: 'TN',
+                zipcode: '642111'))
+println("${emp.id} ${emp.name} ${emp.salary} ${emp.address.city} ${emp.address.state}")
+...................................................................................
+			  Typing in java
+package com.ey.oo.inheritance.typing;
+
+import javax.swing.*;
+
+public class TypingMain {
+    public static void println(Object str) {
+        System.out.println(str);
+    }
+
+    public static void main(String[] args) {
+        /**
+         * During compile time
+         *  The compiler always looks "type/leftSide"
+         *   Car car = new Car();
+         *   Here type is Car
+         *    Vehicle vehicle = new Car();
+         *    vehicle.initAndroidApp()
+         *    Here initAndroidApp method is not present in the type
+         *  How to fix this problem?
+         *     Type casting -  down casting
+         *             //Type casting
+         *         Car tmpCar =(Car) vehicle;
+         *         println(tmpCar.initAndroidApp());
+         *   In java every class has supreme  class called "java.lang.Object"
+         *
+         *   A.java
+         *   class A {}
+         *    After Compilation
+         *    Class A extends java.lang.Object{}
+         *
+         *    Source code
+         *    class B {}
+         *    class C extends B{}
+         *
+         *    class B extends java.lang.Object{}
+         *    class C extends B {}
+         *
+         *    so based on this rule, the reference variable type  can be even Object also
+         *
+         *    Car car = new Car()
+         *    Vehicle car = new Car()
+         *    Object car = new Car()
+         *
+         *
+         */
+
+        Car car = new Car();
+        println(car.startEngine());
+        println(car.initAndroidApp());
+
+        Vehicle vehicle = new Car();
+        println(vehicle.startEngine());
+        //Type casting
+        Car tmpCar = (Car) vehicle;
+        println(tmpCar.initAndroidApp());
+
+        Object objCar = new Car();
+        Car tmpObjCar = (Car) objCar;
+        println(tmpObjCar.startEngine());
+        println(tmpObjCar.initAndroidApp());
+
+    }
+}
+
+.............................................................................................
+				Method Sharing  -Typing
+.............................................................................................
+
+Parent class:
+package com.airbus.oo.groovy.isa.typing
+
+//base class
+class Vehicle {
+    //method
+    def startEngine() {
+        "Vehicle engine starts";
+    }
+}
+package com.airbus.oo.groovy.isa.typing
+
+class Car extends Vehicle{
+}
+
+import com.airbus.oo.groovy.isa.typing.Car
+
+def car = new Car()
+println(car.startEngine())
+
+output:
+Vehicle engine starts
+.............................................................................................
+				 Polymorphism
+.............................................................................................
+
+1.Runtime Polymorphsim
+
+Overriding: Giving different different algorthim for a method in dervied class
+
+ The over ride the base class method in dervied class.
+
+When ever we call a method , the Runtime sees a dervied class only. if method found in the dervied class, then that method will be called.
+
+package com.airbus.oo.groovy.isa.typing
+
+//base class
+class Vehicle {
+    //method
+    def startEngine() {
+        "Vehicle engine starts";
+    }
+}
+
+
+package com.airbus.oo.groovy.isa.typing
+
+class Car extends Vehicle{
+    //override method
+    def startEngine() {
+        "Car engine starts";
+    }
+}
+package com.airbus.oo.groovy.isa.typing
+
+class Bus extends Vehicle{
+
+    //overriding
+    def startEngine() {
+        "Bus engine starts";
+    }
+}
+
+import com.airbus.oo.groovy.isa.typing.Bus
+import com.airbus.oo.groovy.isa.typing.Car
+
+def car = new Car()
+println(car.startEngine())
+
+def bus = new Bus()
+println(bus.startEngine())
+
+output:
+Car engine starts
+Bus engine starts
+
+
+Points:
+
+1. if the method is not found in the child class, parent class method is used
+2. if the method is found in the child class, then child method is used.
+.............................................................................................
+			 The Type(data type and inheritance).
+		        (How dynamic typing is working under hood)
+				(How "def" keyword works)
+..............................................................................................
+			
+How Static Typing works?
+
+package com.airbus.oo.groovy.isa.typing;
+
+public class Animal {
+    public String eat() {
+        return "Animal eats both veg and meat";
+    }
+}
+package com.airbus.oo.groovy.isa.typing;
+
+public class Cat extends Animal{
+    @Override
+    public String eat() {
+        return "Cat drinks milk";
+    }
+}
+package com.airbus.oo.groovy.isa.typing;
+
+public class AnimalMain {
+    public static void main(String[] args) {
+        //Object creation syntax
+        //syntax -1
+        Cat cat  =new Cat();
+        System.out.println(cat.eat());
+    }
+}
+
+Reference variable declaration syntax:
+
+1.Type of the variable can be Same type of Object
+
+Cat cat = new Cat()
+
+2.The type of variable can be super type(Parent Type)
+
+Animal cat = new Cat()
+   Animal cat1 = new Cat();
+   System.out.println(cat1.eat());
+
+    "The type of variable can be the same type or super type".
+
+..............................................................................................
+
+Super Type and Methods in the derived type
+...........................................
+
+package com.airbus.oo.groovy.isa.typing;
+
+public class Cat extends Animal{
+    @Override
+    public String eat() {
+        return "Cat drinks milk";
+    }
+    //this is cat specific method
+    public String huntRats(){
+        return  "Cat Can Hunt rats";
+    }
+}
+ Animal cat1 = new Cat();
+        System.out.println(cat1.eat());
+        cat1.huntRats();
+
+Here you will get compile time error:
+   "Cannot resolve method 'huntRats' in 'Animal'"
+	
+Why this error?
+
+There are two phases in the code?
+
+1.compile time
+  compiler checks the code during compile time whether all expressions are valid.
+
+expressions are :
+ int a =10; here compiler verifies the whether is is compatiable to a.
+
+ Animal cat  = new Cat();
+ cat.huntRats(); here compiler verifies the whether this method part of "type-Animal"
+  "Whether this method is available in the Animal class or not", if not then compile time error
+
+how to fix this compile time error?
+ 
+ byte b =(byte)1000;
+ we need to apply type casting
+
+Cat catTemp = (Cat)cat1;
+catTemp.huntRats();
+
+2.runtime
+ 
+ During runtime, the jvm looks always right side(objects), method invocations are happing objects.
+..........................................................................................
+
+public class Animal {
+    public String eat() {
+        return "Animal eats both veg and meat";
+    }
+}
+
+Look at this code, do you think that , here Animal has any super class?
+ 
+you may tell , no. but there is default super class called "java.lang.Object" / groov.lang.Object"
+
+Every class in java and groovy has super most class is Object
+
+package com.airbus.oo.groovy.isa.typing;
+
+public class AnimalMain {
+    public static void main(String[] args) {
+        //Object creation syntax
+        //syntax -1
+        Cat cat  =new Cat();
+        System.out.println(cat.eat());
+        //syntax 2:
+        Animal cat1 = new Cat();
+        System.out.println(cat1.eat());
+        Cat catTemp = (Cat)cat1;
+        System.out.println(catTemp.huntRats());
+
+        //Syntax 3:
+        Object cat3 = new Cat();
+        Cat cat3Temp = (Cat)cat3;
+        cat3Temp.eat();
+        cat3Temp.huntRats();
+
+    }
+}
+.............................................................................................
+				How groovy achives dynamic typing
+
+
+def variable = new AnyClass();
+      |
+Object variable =new AnyClass();
+Groovy writes type casting code for us.
+.....................................................................................
+"super"
+   -It is variableName
+   -It POints the Object
+   -It points the Parent Object.
+   -super variable is created during object creation, points Parent always.
+  -every object has hidden implicit "this" pointer.
+
+package com.airbus.oo.groovy.isa.typing
+
+class Car extends Vehicle{
+    //override method
+    def startEngine() {
+        "Car engine starts" + super.startEngine()
+    }
+}
+
+2.Compile time polymorphism
+
+ Compile time polymorphism is implemented using same type of reference variable.
+
+Overloading:
+
+ Having multiple copy of the same method with different parameter.
+
+Types of Compile time :
+
+1.method overloading
+2.constructor overloading
+3.operator overloading
+
+
+package com.airbus.oo.groovy.isa.typing.overriding
+
+class Calculator {
+    //different copy of the methods
+    //overloading
+    def add(int a = 0, int b = 0) {
+        a + b
+    }
+
+    def add(int a, int b, int c) {
+        a + b + c
+    }
+}
+
+import com.airbus.oo.groovy.isa.typing.overriding.Calculator
+
+def calc = new Calculator()
+println(calc.add(10,10))
+println(calc.add(3,8,9))
+............................................................................................
+
+package com.airbus.oo.groovy.isa.typing.overloading
+
+class Person {
+    int id
+    String name
+
+}
+//constructor overloading
+def person = new Person(id: 1, name: 'Test')
+def person2 = new Person(id: 1)
+def person3 = new Person(name: 'test')
+.................................................................................................................................................................................
+				Abstract class
+
+Abstract class   =interface + normal class
+
+ Abstract class contains abstract methods(declaration) and with implmentations
+
+package com.airbus.oo.groovy.isa.abstractclasses
+
+abstract class Animal {
+    //declaration
+    abstract String eat()
+    //implementation
+    String saveAnimals(){
+        "Save Animals from Hunters"
+    }
+}
+
+package com.airbus.oo.groovy.isa.abstractclasses
+
+class Tiger extends Animal{
+    @Override
+    String eat() {
+        return "Tiger eats meat"
+    }
+}
+package com.airbus.oo.groovy.isa.abstractclasses
+
+class Cow extends Animal {
+    @Override
+    String eat() {
+        return "Cow eats grass"
+    }
+}
+import com.airbus.oo.groovy.isa.abstractclasses.Cow
+import com.airbus.oo.groovy.isa.abstractclasses.Tiger
+
+def animal = null
+animal = new Tiger()
+println(animal.eat() + " " + animal.saveAnimals())
+
+animal = new Cow()
+println(animal.eat() + " " + animal.saveAnimals())
+.....................................................................................
+
+What is trait?
+ Trait is similar as interface but very advanced interfaces.
+
+drawbacks of interfcases
+
+1.interfaces cant have implementation; but this feature added in java 8.
+
+
+Traits are a structural construct of the language which allows
+
+ -composition of behaviours
+ -runtime implementation of interfaces
+ -overriding
+ -supports static typing/compilation
+.....................................................................................
+............................................................................................
+				Trait - Advanced Interfaces
+............................................................................................
+
+What is trait?
+ Trait is similar as interface but very advanced interfaces.
+
+drawbacks of interfcases
+
+1.interfaces cant have implementation; but this feature added in java 8.
+
+
+Traits are a structural construct of the language which allows
+
+ -composition of behaviours
+ -runtime implementation of interfaces
+ -overriding
+ -supports static typing/compilation
+..............................................................................................
+
+Simple Trait:
+package com.airbus.oo.groovy.isa.traits
+
+trait Flyable {
+    //method implemenation
+    String fly() {
+        'I am flying'
+    }
+}
+package com.airbus.oo.groovy.isa.traits
+
+class Bird implements Flyable{
+}
+
+import com.airbus.oo.groovy.isa.traits.Bird
+import com.airbus.oo.groovy.isa.traits.Person
+
+def bird = new Bird()
+println(bird.fly())
+...........................................................................................
+
+package com.airbus.oo.groovy.isa.traits
+
+
+trait Greetable {
+    abstract String name();
+    String greeting() {
+        "Hello ${name()}"
+    }
+}
+
+package com.airbus.oo.groovy.isa.traits
+
+class Person implements Greetable{
+    @Override
+    String name() {
+        return "Subramanian"
+    }
+}
+def greetings= new Person();
+println(greetings.greeting())
+
+........................................................................................
+			 Dynamic binding of trait with classes
+
+if you want to attach trait with class there are two
+
+Way -1 : declare and attach via implements
+
+trait Greetable {
+    abstract String name();
+    String greeting() {
+        "Hello ${name()}"
+    }
+}
+class Person implements Greetable{
+    @Override
+    String name() {
+        return "Subramanian"
+    }
+}
+
+Way-2 declare and attach during runtime : loosly coupled pattern
+
+
+package com.airbus.oo.groovy.isa.traits
+
+trait Advanced {
+    String doStuff() {
+        'I am Dynamic'
+    }
+}
+
+
+//binding trait dynamically
+def machine = new Machine() as Advanced;
+println machine.doStuff()
+
+def flyingMachine = new Machine() as Flyable;
+println flyingMachine.fly()
+
+..........................................................................................
+				Attach more traits dynamically
+..........................................................................................
+
+
+def newMachine = new Machine()
+//attach features
+def newMachineWith = newMachine.withTraits(Advanced, Flyable)
+println(newMachineWith.fly() + " " + newMachineWith.doStuff())
+.....................................................................................
+.............................................................................................
+				static variables and methods
+.............................................................................................
+
+How to share data across the application?
+
+ static variables and methods
+
+-static variables are not instance specific, can be shared across multiple instances
+
+
+
+instance variables and methods
+   variables and mehtod are declared inside class , can be accessed by that object only.
+
+static variables and methods
+  variables and mehtod are declared inside class with static keyword , can be accessed by  any object in the application.
+
+
+static variables:
+
+1.declare static variable inside class with any data type.
+2.variables are declared in capital letters.
+3.static keyword must be used infront of type
+4.public scope must be used 
+5.static variables must be initalized
+6.No setters and getters.
+
+7.How to access static variables?
+
+  Dont create Object
+
+ Access via
+  ClassName.variable
+
+8.static variables should not be re initalized other parts of the program.
+  
+add one more keyword - final : constant.
+
+
+package com.airbus.oo.groovy.staticinfo
+
+class Message {
+    static String INFO_MESSAGE = "info";
+    static final String WARN_MESSAGE = "Warn";
+    static final String ERROR_MESSAGE = "Error";
+    static final String SUCCESS_MESSAGE = "Success";
+}
+import com.airbus.oo.groovy.staticinfo.Message
+
+println(Message.ERROR_MESSAGE)
+println(Message.WARN_MESSAGE)
+println(Message.SUCCESS_MESSAGE)
+..............................................................................
+			 Functional Programming
+..............................................................................
+
+What is Functional  Programming?
+   Functional programming is the application/implementation of "Lambda Calculs".
+
+Lambda calculs represents abstract computer's calculation.
+
+Lambda calculas proposes the model called "function" -  unit of computation.
+
+Functional Programming and its implemenation via programming language implmented in 1950 called "LISP"
+
+After that , many programming languages started implementing functional programmings.
+
+Why Fp?
+
+ -It gives simple programming model to process data.
+
+Groovy is dynamic,object oriented , functional style programming languages.
+
+Functional Programming principles:lambda calculs mathetical
+
+ "functions are first class citizens"
+ "functions are treated as expressions"
+     "expression means var res=10*10"
+
+1.side effects
+2.Pure functions
+3.immutablity : referential transparency.
+4.function is the first class cizitens
+5.no loops, but recurrsion.
+6.Higher order function
+....................................................................................
+			Groovy is not pure functional Programming
+				 rather
+			  Groovy is functional style language
+
+pure vs style:
+   pure means the language must implement 100% lambda calculs theory.
+pure languages : lisp,haskell
+  
+   style means the language need not implement 100% lambda calculs theory.
+eg : groovy,java 8 ,javascript,python......
+............................................................................
+//////////////////////////////////////////////////////////////////////////////////////////////
+	    Groovy implements - Higher order function/function is first class citizen
+		
+.....................................................................................
+Function is value like others.
+
+int a =10;
+Employee emp  = new Employee();
+
+here 
+a is variable its value is 10
+emp is variable its value is Employee Object
+
+you can declare variable, it can hold "function as value" - Function is first class citizen.
+
+Since function is value, it can be passed to another function as parameter , and can be returned from another function : Higher order function
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+              Functional Programming concepts and implementation in Groovy
+				(Closures)
+.....................................................................................
+What is Closure?
+
+ The closure is object, used to implement functional programming in groovy.
+
+ The closure is an open , anonymous(nameless),block of code that can take arg,return a value and be assigned to a variable, can be passed as a parameter to another clousre or method.
+
+closure is method /function.
+
+ "closure is free code"
+
+ "Closure is a literal" - value like 10 ,"hello" ,true, 
+
+Since closure is a literal, can be assigned to a variable,that variable can be used to invoke that closure(method/function)
+
+How to define a closure?
+
+def/Type variableName = { 
+   closure code
+}
+func() // function invocation
+
+How to declare closure and invoke?
+
+//how to declare closure and initalize them
+int a=10;
+
+Basic closure syntax:
+.....................
+
+def func = { code }
+
+func() // function invocation
+
+How to declare closure and invoke?
+
+//how to declare closure and initalize them
+
+def func = {
+    //function body
+    println("Hello , Closure")
+    println("Hello , Closure")
+    println("Hello , Closure")
+    println("Hello , Closure")
+    println("Hello , Closure")
+
+}
+//invoke closure
+func()
+............................................................................................
+//Groovy closure parameters and args
+
+//-> Arrow : which separates body of the function and args
+//Strong typing
+def add = null
+add = { int a, int b ->
+    def result = a + b
+    println("The Result is ${result}")
+}
+add(10, 10)
+
+//if you dont pass values
+add = { int a = 0, int b = 0 ->
+    def result = a + b
+    println("The Result is ${result}")
+}
+add()
+
+//dynamic parameters
+add = { def a = 0, def b = 0 ->
+    def result = a + b
+    println("The Result is ${result}")
+}
+add(5, 8)
+
+//dynamic parameters without even def keyword
+add = { a = 0, b = 0 ->
+    def result = a + b
+    println("The Result is ${result}")
+}
+add(5, 8)
+..............................................................................................
+					Single Args
+
+
+def sayHello = null;
+
+sayHello = { name -> println("Hello $name") }
+sayHello('Subramanian')
+
+implicit "single parameter called  it"
+
+"it" - it is keyword used to replace explicit single parameter.
+
+
+//single parameter
+def sayHello = null
+
+sayHello = { String name ->
+    println("Hello $name")
+}
+sayHello("Subramanian")
+
+sayHello = { name ->
+    println("Hello $name")
+}
+sayHello("Subramanian")
+
+//add it
+sayHello = { it ->
+    println("Hello $it")
+}
+sayHello("Subramanian")
+//without any explicit parameter
+sayHello = {println("Hello $it") }
+sayHello("Subramanian")
+............................................................................................
+				Returning values from the Closure
+.............................................................................................
+//How to return values from the groovy.
+def add = null;
+add = { a = 1, b = 2 ->
+    def result = a + b;
+    return result;
+}
+println(add(10, 10))
+//no return statement is needed.
+add = { a = 1, b = 2 ->
+    def result = a + b;
+    result;
+}
+println(add(10, 10))
+/////////////////////////////////////////////////////////////////////////////////
+// if you have single parameter and you want to return
+def getName = { it }
+println(getName('Ram'))
+
+............................................................................................
+				Closure Object
+............................................................................................
+
+//Generics
+Closure<Boolean> isOdd = {
+    it % 2 != 0 // return true or false
+}
+isOdd(3) ? println("Odd") : println("Even")
+//another way of calling closure
+isOdd.call(4) ? println("Odd") : println("Even")
+.........
+				Higher order function
+.............................................................................................
+
+functions(closures) can be passed as parameter to another function(closure) or any object method.
+
+//Function as parameter
+
+//method takes String parameter
+def sayGreet(String name) {
+    println "$name"
+}
+//hardcode value
+sayGreet('Subramanian')
+def firstName = 'Subramanian';
+sayGreet(firstName);
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//callback is just Variable going to hold function
+def connect(Closure<Void> callback) {
+    //call the variable
+    callback()
+}
+
+//passing closure variable
+def webServer = {
+    println "WebServer is connecting"
+}
+connect(webServer)
+//passing closure directly
+connect({
+    println "My another web Server"
+})
+//DSL code : Ommiting ()
+connect {
+    println "My another web Server "
+}
+///
+
+Higher orders and parameters and return
+
+
+void startWebServer(Closure<Void> callback) {
+    callback('Running') //single parameter
+}
+
+startWebServer {
+    println  "Weberver is $it"
+}
+
+............................................................................................
+void startWebServer(Closure<Void> callback) {
+    callback('Running') //single parameter
+}
+
+startWebServer {
+    println "Weberver is $it"
+}
+
+void job(Closure<Boolean> callback) {
+    def status = callback('job')
+    status ? println("job is running") : println("Job is not running")
+}
+
+job {
+    it == 'job' ? true : false
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//multi clsoure parameter
+void login(String name = "", String password = "", Closure<Void> resolve, Closure<Void> reject) {
+    (name == 'admin') && (password == 'admin') ? resolve('Login Success') : reject('Login failed')
+}
+
+//positional parameters
+login("admin", "admin", {
+    println it
+}, {
+    println it
+})
+login "foo", "bar", {
+    println it
+} {
+    println it
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
