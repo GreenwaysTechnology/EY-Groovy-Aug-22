@@ -4087,7 +4087,7 @@ Functional Programming principles:lambda calculs mathetical
 ....................................................................................
 			Groovy is not pure functional Programming
 				 rather
-			  Groovy is functional style language
+			 Groovy is functional style language
 
 pure vs style:
    pure means the language must implement 100% lambda calculs theory.
@@ -4349,10 +4349,588 @@ login "foo", "bar", {
 } {
     println it
 }
+....................................................................................
+			Passing closure to another closure
+.....................................................................................
+//Passing Closure to another closure
+
+def connect = null
+connect = { callback ->
+    callback()
+}
+connect = {
+    it()
+}
+connect({
+    println "Connect Closure"
+})
+connect()
+
+def auth = { userName, password, resolve, reject ->
+    if (userName == 'admin' && password == 'admin') {
+        resolve('Login Success')
+    } else {
+        reject('Login failed')
+    }
+}
+auth('admin', 'admin', { println it }, { println it })
+.............
+Closure As object.
+
+
+def sayGreet = {
+    println "Hello"
+}
+println (sayGreet instanceof Closure)
+//calling closure with call method
+sayGreet.call()
+//short cut
+sayGreet()
+...................................................................................
+				Nested Closure
+
+
+//Nested Closures
+/**
+ * inner closures cant be called outside directly because the scope of inner closure is subject
+ * to outer closure
+ * any inner closures cant be directly
+ */
+
+def outerCls = {
+    println "Outer closure"
+    def innerCls = {
+        println "Inner closure"
+        def innerMostcls = {
+            println "Inner Most closure"
+        }
+        //calling innerMost Closure
+        innerMostcls()
+    }
+    innerCls()
+}
+//calling nested cls
+outerCls()
+//innerCls()
+
+...................................................................................
+Nested closure calling pattern:
+def outerCls = {
+    println "Outer closure"
+    def innerCls = {
+        println "Inner closure"
+        def innerMostcls = {
+            println "Inner Most closure"
+        }
+
+    }
+}
+//outer()inner()innerMost()
+outerCls()()()
+
+How this works?
+ In groovy, inside function/method/closure , last line of code always returns
+here we return implicitly.
+
+Method /function/Closure can return another closure: Higher Order Function.
+//method which returns closure
+//syntax -1
+def counter() {
+    //inner closure
+    def inc = {
+        10
+    }
+    return inc
+}
+
+def increment = counter()
+println increment()
+
+//
+//method which returns closure
+//syntax -2
+def counter2() {
+    //Anonmous closure
+    return {
+        10
+    }
+}
+
+def increment2 = counter2()
+println increment2()
+
+//
+//method which returns closure without return statement
+//syntax -3
+def counter3() {
+    def inc = {
+        10
+    }
+}
+
+def increment3 = counter3()
+println increment3()
+/////////////////////////
+
+//closure returns another closure
+def auth = {
+    return {
+        "Login Success"
+    }
+}
+def status = auth()
+println status()
+.....................................................................................
+Nested Closures and Parameters:
+def counter(state = 0) {
+    return { seed = 0, incrementBy = 1 ->
+        println("State $state Seed $seed  IncrementBy $incrementBy")
+    }
+}
+
+def cls = counter(10)
+cls(12, 10)
+//shortcut calling inner closure and passing parameters
+counter(13)(100, 25)
+
+//def counterCls = {
+//    state = 0 ->
+//        return { seed = 0, incrementBy = 1 ->
+//            println("State $state Seed $seed  IncrementBy $incrementBy")
+//        }
+//}
+//using it
+def counterCls = {
+        return { seed = 0, incrementBy = 1 ->
+            println("State $it Seed $seed  IncrementBy $incrementBy")
+        }
+}
+counterCls(23)(10, 89)				
+
+....................................................................................
+
+//Variable args : we dont know in advance how many parameters we pass.
+
+def concat = { String... args ->
+    args.join(' ')
+}
+//calling concat with many args
+println concat('subramanian', 'murugan')
+println concat('a', 'b', 'c', 'd', 'e', 'f')
+...................................................................................
+			Closure can access outer closure variables
+...................................................................................
+
+Closure - Closed over-
+
+//Scope: Closures not groovy Closure
+/**
+ * The outer function variables(local variables and arg variables) are  accessed inside inner
+ * function becomes closure- the life of outer function variables are hoisted into inner functions
+ *  */
+
+def counter(def state) {
+    int a = 0;
+    def inc = {
+        ++a // inner closure access outer method/closure variables
+    }
+}
+def inc = counter()
+println inc()
+println inc()
+
+def counter(def state) {
+    int a = 0;
+    def inc = {
+        a + it
+    }
+}
+def inc = counter()
+println inc(10)
+println inc(20)
+.....................................................................................
+				How to declare closures inside class
+
+package com.ey.fp.closures
+
+class Greeter {
+    //closure
+    def sayHello = {
+        println("closure")
+    }
+}
+import com.ey.fp.closures.Greeter
+
+//Classes and Closures
+
+def greeter =new Greeter()
+//invoke closure
+greeter.sayHello()
+...................................................................................
+				Dynamic Programming
+..................................................................................
+
+The Program flow can be altered during runtime.Groovy is dynamic programming language
+which provides dynamic programming features
+
+Closures are "free code"(which need not be bound with any object), 
+Closures can be attached with any object during run time-This is called closure delegate.
+
+What is delegate?
+Dictionary meaning:
+ A person designated to act for  or represent another or others; deputy.
+
+
+Groovy and Delegate:
+....................
+
+Groovy language is dynamic language.
+
+As of now , we have discussed "dynamic nature of groovy with respect to type system".
+
+Groovy provides more dynamic programming features.
+
+-During runtime, we can do lot of things on object.
+   
+A.Dynamic binding of an closure to an Object.
+
+        "This is called delegation"
+
+
+.....................................................................................
+					Keywords in Closure
+....................................................................................
+
+1.this
+2.owner
+3.delegate
 
 
 
+1.this keyword:
+   this inside closure , corresponds to the "enclosing class" where  the closure is defined.
 
+Where we can define closure?
+
+-inside script
+-inside groovy class
+
+-inside script
+
+closurethis.groovy
+def mycls = {
+    println this;
+}
+mycls()
+
+output: The class Name
+closurethis@490caf5f
+
+
+package com.ey.fp.closures.dynamicprog
+
+class Greeter {
+    def mycls = {
+        println this;
+    }
+}
+
+import com.ey.fp.closures.dynamicprog.Greeter
+
+def greeter = new Greeter()
+greeter.mycls()
+
+output:
+com.ey.fp.closures.dynamicprog.Greeter@3b0f7d9d
+.....................................................................................
+
+owner:
+  It corresponds to the "enclosing object" where the closure is defined, which may be either class or a closure.
+
+/**
+ * the value of owner by default is the current object.
+ * the value of owner can be changed during runtime, after changing the owner property may have
+ * new value.
+ */
+
+def mycls = {
+    println "Owner $owner"
+    println "This $this"
+
+}
+mycls()
+
+Classe,Closure and Owner:
+.........................
+
+//owner
+def mycls = {
+    println "this : " + this;
+    println "Owner :"  + owner // who is controlling this closure
+}
+mycls()
+class Foo {
+    def myls = {
+        println "Foo "
+        println "this : " + this;
+        println "owner : " + owner;
+    }
+}
+def myclass = new Foo();
+myclass.myls()
+
+............................................................................................
+			  this vs owner
+.............................................................................................
+
+this  => corresponds to the "enclosing class where the closure is defined"
+owner => corresponds to the  "enclosing object where the closure is defined" which may be either another class or a closure.
+..............................................................................................
+			    Delegate 
+..............................................................................................
+
+Delegate corresponds to a "third party Object" where method calls or properties are resolved whenever the receiver of the message is not defined.
+
+The delegate of a closure can be accessed by the delegate property.
+ 
+Closure  "ownership" can be changed object to object.
+
+delegate property helps to bind closure with any object during runtime.
+def mycls = {
+    println "this : " + this;
+    println "Owner :" + owner // who is controlling this closure
+    println "Delegate : " + delegate
+}
+mycls()
+
+class Bar {
+    def myls = {
+        println "Bar "
+        println "this : " + this;
+        println "owner : " + owner;
+        println "Delegate : " + delegate
+
+    }
+}
+
+def myclass = new Bar();
+myclass.myls()
+
+
+Closure inside Object , how to bind one Object of closure on to another object?
+
+class Util {
+    def add = {
+        delegate.a + delegate.b
+    }
+}
+
+def util = new Util()
+
+class Math {
+    int a;
+    int b
+}
+
+def math = new Math(a: 10, b: 20)
+util.add.delegate = math
+println util.add()
+
+..........................................................................................
+Delegation Strategy:
+....................
+
+lookup mechnism:
+
+
+eg:
+
+def upperCasedName = {
+    println "this : ${this}"
+    println "Owner : ${owner}"
+    println "Delegate : ${delegate}"
+    println("${name.toUpperCase()}")
+}
+upperCasedName()
+
+
+this : ClosureDelegeStrategy@69f1a286
+Owner : ClosureDelegeStrategy@69f1a286
+Delegate : ClosureDelegeStrategy@69f1a286
+Caught: groovy.lang.MissingPropertyException: No such property: name for class: ClosureDelegeStrategy
+groovy.lang.MissingPropertyException: No such property: name for class: ClosureDelegeStrategy
+	at ClosureDelegeStrategy$_run_closure1.doCall(ClosureDelegeStrategy.groovy:6)
+	at ClosureDelegeStrategy$_run_closure1.doCall(ClosureDelegeStrategy.groovy)
+	at ClosureDelegeStrategy.run(ClosureDelegeStrategy.groovy:8)
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+How to change the lookup order?
+
+Groovy first sees the method of owner, if not present, it will look up  in the delegate object.
+
+Closure writer = {
+    println "Owner $owner"
+    println "this $this"
+    println "delegate ${delegate}"
+    println append(it);
+}
+//script append method: writer's owner method
+def append(String str) {
+    "Fake append"
+}
+
+StringBuffer sb = new StringBuffer();
+//writer.resolveStrategy = Closure.DELEGATE_FIRST
+//writer.resolveStrategy = Closure.OWNER_FIRST
+writer.delegate = sb;
+writer('Hello')
+writer('Hello')
+writer('Hello')
+
+
+Default is "Owner First"
+//////////////////////////////////////////////////////////////////////////////////////////
+Closure.OWNER_FIRST ->lookup owner first, if not lookup delegate, if not ,will throw error
+Closure.DELEGATE_FIRST -> lookup delegate first, if not owner , if not will thorw error.
+Closure.OWNER_ONLY - lookup only in owner, if not , will throw error
+Clousre.DELEGATE_ONLY - lookup only in delegate , if not will throw error.
+////////////////////////////////////////////////////////////////////////////////////////////
+//Delegation Strategy: how to lookup the properties
+//def name = 'foo'
+//def upperCasedName = {
+//    println "this : ${this}"
+//    println "Owner : ${owner}"
+//    println "Delegate : ${delegate}"
+//    println("${name.toUpperCase()}")
+//}
+//upperCasedName()
+
+//script append method: writer's owner method
+def append(String str) {
+    "Fake append"
+}
+
+Closure writer = {
+    println "Owner $owner"
+    println "this $this"
+    println "delegate ${delegate}"
+    println append(it);
+}
+
+def greet(String message) {
+    "Greet $message"
+}
+
+def sayGreet = {
+    greet it
+}
+writer "Hai"
+println " ........"
+StringBuffer sb = new StringBuffer();
+//by default groovy looksup methods in the owner, if you want to change
+writer.resolveStrategy = Closure.DELEGATE_FIRST
+writer.delegate = sb
+writer "Hello"
+//First lookup sayGreet in the StringBuffer
+sayGreet.resolveStrategy = Closure.DELEGATE_FIRST
+sayGreet.delegate = sb
+println sayGreet("Hello")
+
+...
+package com.ey.fp.closures.dynamicprog.delegates.strategy
+
+class Person {
+    String name
+//    def print = {
+//        "My Name is ${name}"
+//    }
+//    String toString(){
+//        print()
+//    }
+    def print = {
+        "My Name is ${name}"
+    }
+
+    String toString() {
+        print()
+    }
+}
+
+package com.ey.fp.closures.dynamicprog.delegates.strategy
+
+class Visitor {
+    String name
+}
+
+import com.ey.fp.closures.dynamicprog.delegates.strategy.Person
+import com.ey.fp.closures.dynamicprog.delegates.strategy.Visitor
+
+def p = new Person(name: 'Subramanian')
+//def p = new Person()
+
+def v = new Visitor(name: 'Arun')
+//def v = new Visitor()
+//the delegate object is used first, then owner
+//p.print.resolveStrategy = Closure.DELEGATE_FIRST
+//default : if property/method exits in the owner, then it will be called on the owner if not
+// then delegate is used.
+//p.print.resolveStrategy = Closure.OWNER_FIRST
+
+//will only resolve the property/method lookup on the owner; the delegate will be ignored
+//p.print.resolveStrategy = Closure.OWNER_ONLY
+
+//will only resolve the property/method lookup on the delegate; the owner will be ignored
+p.print.resolveStrategy = Closure.DELEGATE_ONLY
+
+p.print.delegate = v
+println p.toString()
+.....................................................................................
+			Functional Programming implmentations
+.....................................................................................
+
+1.Currying:
+   In groovy, currying refers to the concept of parital application.
+   Currying is done in groovy will let you set the value of one parameter of a   closure, and it will return new closure accepting one less arg.
+
+ Currying is nothing but creating a new function from the existing functions by abstracting complex logic.
+
+Types of currying:
+
+1.left curry
+    setting parameters from the left most side
+2.right curry
+3.index based curry
+
+//Left curry : left parameter is passed implicitly, right parameters are passed manually
+def nCopies = { int n, String str -> str * n }
+//left curry is called with curry method
+def twice = nCopies.curry(2)
+def fiveTimes = nCopies.curry(5)
+
+println nCopies(2, "Ram")
+
+println twice('Subramanian')
+println fiveTimes('Subramanian')
+
+//Right curry: supply right most parmeter fixed and other parameters are passed implicitly
+def noOfCopies = { int n, String str -> str * n }
+def greeterRepeter = noOfCopies.rcurry('greeter')
+println greeterRepeter(5)
+
+//index based curry: we can select which parameter is implicit
+
+def volume = { double l, double w, double h ->
+    println "l ${l} w $w h $h"
+    l * w * h
+}
+def fixedVolum = volume.ncurry(0, 2d)
+println fixedVolum(3d, 4d)
+.....................................................................................
+
+Meta Programming
+ -compile time
+ -runtime 
 
 
 
