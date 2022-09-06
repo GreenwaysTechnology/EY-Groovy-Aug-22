@@ -4928,9 +4928,693 @@ def fixedVolum = volume.ncurry(0, 2d)
 println fixedVolum(3d, 4d)
 .....................................................................................
 
-Meta Programming
+                                Meta Programming-Dynamic Programming
+
  -compile time
  -runtime 
+
+What is meta programming?
+  meta means internal structure.
+
+Can we alter program flow during compile time or runtime?
+ 
+Altering program flow is nothing,generally what we write(in source code), will be there in compiled code.There might be extra code provied by compiler.
+
+We can ask compiler to inject extra code, during compile time which is also called meta programming - This is called "compile time meta programming".
+
+Can we alter Runtime code(Object) during runtime?
+
+ What is alteration - adding,removing,deleting,iterating properties 
+
+In java , it is not possible to alter runtime object.
+
+Groovy introduced a concept called "Runtime meta programming" throuch we can do any thing on object.
+....................................................................................
+..............................................................................................
+				Compile Time Meta Programming
+..............................................................................................
+
+Compile-time meta Programming in groovy allows code generation at compile-time.
+Compiler generally generates a program (compiled program)  based on a concept "AST"
+Abstract Syntax Tree - tree representation of compiled program.
+
+Source code----compile----ast---executed.
+
+Groovy hooks AST Transformation during compilation process.
+
+When compare to Runtime meta programming, compile time meta programming will have changes in the byte code itself -  eager process.
+
+Implementation:
+  AST transformation is done via "Annotations"
+
+@groovy.transform - package provides compile time meta programming instructions.
+
+ToString:
+.........
+package com.ey.fp.dynamic.compiletime
+
+import groovy.transform.ToString
+
+
+//@ToString
+@ToString(excludes = ['state', 'city'])
+class Person {
+    String firstName
+    String lastName
+    String city
+    String state
+//
+//    //Override toString method
+//    @Override
+//    String toString() {
+//        return "first $firstName last $lastName"
+//    }
+}
+
+......
+package com.ey.fp.dynamic.compiletime
+
+import groovy.transform.ToString
+
+@ToString
+class Account {
+    int accountId
+    String accountType
+}
+package com.ey.fp.dynamic.compiletime
+
+import groovy.transform.ToString
+
+@ToString(includeSuper = true)
+class SavingsAccount extends Account{
+    String name
+    double balance
+}
+import com.ey.fp.dynamic.compiletime.Person
+import com.ey.fp.dynamic.compiletime.SavingsAccount
+
+def person = new Person(firstName: "Subramanian",
+        lastName: "Murugan",
+        city: "Coimbatore", state: "Tamil Nadu")
+//com.ey.fp.dynamic.compiletime.Person@199e4c2b
+//package.ClassName@HashCode
+//this statement behind it invokes toString method by default.
+println(person)
+
+def account = new SavingsAccount(name: 'Ram', accountId: 1, accountType: "savings", balance: 34000)
+
+print(account)
+...................................................................................
+			   EqualsAndHashCode
+...................................................................................
+
+Which is implementation of equals method and hashcode method
+
+package com.ey.fp.dynamic.compiletime.equalshashcode
+
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
+
+@ToString
+@EqualsAndHashCode(includes = ['id','name'])
+class Person {
+    int id
+    String name
+    String city
+}
+import com.ey.fp.dynamic.compiletime.equalshashcode.Person
+
+def personOne = new Person(id: 1, name: 'Subramanian', city: 'Coimbatore')
+//def personTwo = new Person(id: 1, name: 'Ram', city: 'Coimbatore')
+def personTwo = new Person(id: 1, name: 'Subramanian', city: 'Coimbatore')
+
+println(personOne == personTwo ? "Two Person Objects are same" : "Two Person Objects are not same")
+
+println(personOne.equals(personTwo) ? "Two Person Objects are same" : "Two Person Objects are not same")
+...................................................................................
+			   Tuple constructors
+
+The @Tuple Constructor annotations aims at eleminating boilerplate code by generating constructors for us.
+A tupe constructor is created having a parameter for each property(possibly each field).
+Each Parameter has a default value.
+
+
+package com.ey.fp.dynamic.compiletime.tupleconstructors
+
+import groovy.transform.ToString
+import groovy.transform.TupleConstructor
+
+@ToString
+@TupleConstructor
+class Person {
+    int id
+    String name
+    String city
+}
+import com.ey.fp.dynamic.compiletime.tupleconstructors.Person
+
+//traditional map -style constructor
+def person = new Person(id: 1, name: 'Subramanian', city: 'Coimbatore')
+println(person)
+
+//tuple constructor
+def newPerson = new Person(1, "Subramanian", "Cbe")
+println(newPerson)
+
+newPerson = new Person(34)
+println(newPerson)
+....................................................................................
+			 Canonical -Coimbing ToString,EqualsHashCode,TupleConstructoror
+
+package com.ey.fp.dynamic.compiletime.canonical
+
+import groovy.transform.Canonical
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
+import groovy.transform.TupleConstructor
+
+//@ToString
+//@EqualsAndHashCode
+//@TupleConstructor
+//class Person {
+//    int id
+//    String name
+//    String city
+//}
+@Canonical
+class Person {
+    int id
+    String name
+    String city
+}
+import com.ey.fp.dynamic.compiletime.canonical.Person
+
+//
+
+def person = new Person(id: 1, name: 'subramanian', city: "cbe")
+println(person)
+
+.....................................................................................
+				Runtime Meta Programming
+....................................................................................
+
+Runtime meta programming we can postpone to runtime the decision to intercept, inject,and even syntesize methods of classes and interfaces.
+
+MOP - Groovy meta Object Protocal - is used to implement runtime meta programming.
+
+Kinds of Objects:
+1.POJO - Plain old java object
+   java object written for jvm directly
+ pojo object inherits java.lang.object directly
+2.POGO - Plain Old groovy Object
+   Groovy object inherits java.lang.object and implments groovy.lang.GroovyInterceptable which responsible for making runtime decision.
+3.Groovy Interceptor 
+   Object which has method interception capability
+
+
+eg:
+package com.ey.fp.dynamic.runtimemeta
+
+class Employee {
+    String firstName
+    String lastName
+    int id
+}
+
+import com.ey.fp.dynamic.runtimemeta.Employee
+
+def employee = new Employee(id: 1, firstName: 'Subramanian', lastName: 'Murugan')
+
+//accessproperty
+println(" ${employee.id}")
+println("Name ${employee.firstName} ${employee.lastName}")
+............
+
+
+
+//property you access which does not present
+println("Address ${employee.city}")
+
+
+When you access the property which does not present in the class declaration.
+
+
+Caught: groovy.lang.MissingPropertyException: No such property: city for class: com.ey.fp.dynamic.runtimemeta.Employee
+Possible solutions: id
+groovy.lang.MissingPropertyException: No such property: city for class: com.ey.fp.dynamic.runtimemeta.Employee
+Possible solutions: id
+	at RuntimeMetaProgramming.run(RuntimeMetaProgramming.groovy:9)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+
+Groovy can intercept this exception, can provide meaningfull message and we can add later.
+
+
+Property Missing:
+package com.ey.fp.dynamic.runtimemeta
+
+class Employee {
+    String firstName
+    String lastName
+    int id
+
+    //provide solution for property missing
+    def propertyMissing(String propName) {
+        "Property $propName is Missing in the class"
+    }
+
+}
+import com.ey.fp.dynamic.runtimemeta.Employee
+
+def employee = new Employee(id: 1, firstName: 'Subramanian', lastName: 'Murugan')
+
+//accessproperty
+println(" ${employee.id}")
+println("Name ${employee.firstName} ${employee.lastName}")
+//property you access which does not present
+println("Address ${employee.city}")
+
+....................................................................................
+
+Method calling:
+import com.ey.fp.dynamic.runtimemeta.Employee
+
+def employee = new Employee(id: 1, firstName: 'Subramanian', lastName: 'Murugan')
+
+//accessproperty
+println(" ${employee.id}")
+println("Name ${employee.firstName} ${employee.lastName}")
+//property you access which does not present
+println("Address ${employee.city}")
+
+//method calling
+println("method ${employee.calculate()}")
+
+Caught: groovy.lang.MissingMethodException: No signature of method: com.ey.fp.dynamic.runtimemeta.Employee.calculate() is applicable for argument types: () values: []
+groovy.lang.MissingMethodException: No signature of method: com.ey.fp.dynamic.runtimemeta.Employee.calculate() is applicable for argument types: () values: []
+	at RuntimeMetaProgramming.run(RuntimeMetaProgramming.groovy:12)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+
+
+package com.ey.fp.dynamic.runtimemeta
+
+class Employee {
+    String firstName
+    String lastName
+    int id
+
+    //provide solution for property missing
+    def propertyMissing(String propName) {
+        "Property $propName is Missing in the class"
+    }
+
+    def methodMissing(String methodName, def methodArgs) {
+        "method $methodName is not defined"
+    }
+
+}
+import com.ey.fp.dynamic.runtimemeta.Employee
+
+def employee = new Employee(id: 1, firstName: 'Subramanian', lastName: 'Murugan')
+
+//accessproperty
+println(" ${employee.id}")
+println("Name ${employee.firstName} ${employee.lastName}")
+//property you access which does not present
+println("Address ${employee.city}")
+
+//method calling
+println("method ${employee.calculate()}")
+.....................................................................................
+			   ExpandoMetaClass
+
+
+ExpandoMetaClass  is class used to add methods, properties,constructors during runtime.
+
+EmployeeService.groovy
+package com.ey.fp.dynamic.runtimemeta
+
+class CustomerService {
+}
+
+import com.ey.fp.dynamic.runtimemeta.CustomerService
+
+//add new method during runtime
+def customerService = new CustomerService();
+
+//add property via meta class
+customerService.metaClass.id = 1
+customerService.metaClass.name ='Subramanian'
+customerService.metaClass.city='Coimbatore'
+
+//dynamic method injection via closure
+customerService.metaClass.list  = {
+    "CustomerList"
+}
+
+println(customerService.list())
+println(customerService.id)
+println(customerService.name)
+println(customerService.city)
+.....................................................................................
+		Can we add new methods/properties in the existing java apis
+
+Yes, via ExpandoMetaClass.
+//add new Method in existing String class
+
+String.metaClass.capitalize = {String it ->
+    it.substring(0, 1).toUpperCase() + it.substring(1)
+}
+def name ="subramanian";
+println name
+print(name.capitalize())
+...................................................................................
+				Collections -data Structure
+....................................................................................
+
+Arrays
+List
+Set
+Map
+
+//List
+
+def numbers = [1, 2, 3, 4, 5, 9]
+def value = numbers.get(1)
+println(value)
+//how to read all value : for loop  , provide iterators are api to read values
+numbers.forEach(i -> println(i)) // functional programming is used ; java style
+numbers.each { i -> println(i) }
+numbers.each { println(it) }
+
+println "...................................."
+//set
+def employees = [10, 10, 20, 30, 40, 50] as HashSet
+//def employees = [10, 10, 20, 30, 40, 50] as HashSet
+
+employees.each {println(it)}
+
+
+List Processing:
+def list = [] // empty list
+//add new item
+println list.empty
+
+list.add(12)
+//use << add operator
+list << 10
+list << 20
+
+println list
+//list processing
+def set = [1, 1, 1, 1, 2, 3, 3, 4, 5, 5, 6, 6]
+println "Num of Occurance Items ${set.count(1)}"
+//sorting
+def sortedList = [6, 3, 100, 0, 1].sort()
+println(sortedList)
+
+Map:
+
+
+def product = [
+        id   : 1,
+        name : 'Phone',
+        qty  : 100,
+        price: 10000.78
+]
+product.each { entry -> println(entry) }
+
+product.each { entry -> println("${entry.key} ${entry.value}") }
+
+def users = [
+        id    : 1,
+        name  : 'Subramanian',
+        skills: [
+                skillId: 100,
+                skill  : 'Groovy'
+        ]
+]
+users.each {key,value->
+    println("${key} ${value}")
+    if(value instanceof  java.util.Map){
+        println(value.get("skillId") + value.get("skill"))
+    }
+}
+What is DSL?
+  A domain -specific language is a computer language specialized to a particular domain.
+
+eg dsl
+   HTML,Unix shell scripts,spread sheets,XML ,regular expressions,XSLT,CSS
+
+DSL are human readable programs, any body can read, understand,write.
+
+Types of DSL:
+
+1.External DSL
+    It is a language that's parsed independently of the host general purpose language.
+ eg ; CSS,HTML,Regular expressions
+2.Internal DSL
+   Internal DSL are particular form of api in a host general purpose language often
+refered to as "fluent interfaces" -  fluent api/builder based api.
+
+Groovy offers features to create internal DSLs.
+ 
+How to implement DSL in groovy?
+
+ We have many patterns.
+
+1.Command Chain pattern / builder pattern
+
+IN dsl programming there are two roles
+
+1.DSL Authors -  the people who build dsl
+2.DSL users -  the people who uses dsls
+
+Implementation:
+
+1.plain function
+2.function + closure + map + class with builder pattern
+
+
+calling dsl;
+
+ presentation('DSL',at:'Google',on:'Dec 30')
+
+ presentation 'DSL',at:'Google',on:'Dec 30'
+
+
+........................................................................
+//Creating dsl programmings using plain functions.
+
+def presentation(Map args, String topic) {
+    //println ("Hello")
+//    println "Hello" // dsl syntax: we can ommit ()
+    println "I am Presenting about $topic at $args.at on $args.on"
+}
+
+presentation('Groovy DSL', at: 'EY', on: 'Sep 06')
+presentation 'Groovy DSL', at: 'EY', on: 'Sep 06'
+
+
+...........
+
+Builder pattern/Command Chains:
+...............................
+
+
+def talk(topic) {
+    def talkBuilder = new TalkBuilder(topic: topic)
+    talkBuilder; // Return talk builder Object
+}
+//builder class
+class TalkBuilder {
+    def topic, location, when;
+    //location function
+    def at(location) {
+        this.location = location
+        this; // returning the TalkBuilder object
+    }
+
+    def on(when) {
+        this.when = when;
+        println("I am Presenting $topic at $location on $when");
+        this;
+    }
+}
+
+talk('DSL').at('Microsoft').on('Dec 31')
+talk 'Spring With Groovy DSL ' at 'Google' on 'Jan 1'
+///////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
+Function + map + Closure
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+def speak(topic) {
+    //return Map
+    ['at': { location ->
+        //return map
+        ['on': { when ->
+            println("I am Presenting $topic at $location on $when");
+        }]
+    }]
+}
+
+speak "Groovy" at "EY" on 'Sep 06'
+
+//refactored code of the above
+def talk(topic) {
+    //return Map
+    ['at': { location ->
+        //return map
+        ['on': { println("I am Presenting $topic at $location on $it"); }]
+    }]
+}
+
+talk "Groovy" at "EY" on 'Sep 06'
+
+//please show the square_root of 100
+
+//sub closure
+show = { println it }
+square_root = { Math.sqrt it }
+
+//action =show
+def please(action) {
+    [
+            the: { what ->
+                [of: { n -> action(what(n))
+                }]
+            }
+    ]
+}
+
+please show the square_root of 100
+.....................................................................................
+                           File Processing,Json Processing
+.....................................................................................
+def baseDir = "./"
+//eachLine reads data in the form of string
+// new File(baseDir, 'haiku.txt').eachLine {
+//     println it
+// }
+
+//read file with line no
+// new File(baseDir, 'haiku.txt').eachLine { line,nb ->
+//    println "$nb $line"
+// }
+
+//if you want to read file using java apis
+// new File(baseDir,"haiku.txt").withReader { reader ->
+//    while (reader.readLine()) {
+//        println reader.readLine()
+//    }
+// }
+//if you want to process file content.
+//store file content into list
+// def list = new File(baseDir, 'myfile.txt').collect {it}
+// //you can convert into data stream:so that you can process
+// list.stream().filter(item->item.startsWithIgnoreCase("a")).map(String::toUpperCase).each {println it}
+
+
+// def file = new File(baseDir,"haiku.txt").eachByte {println it}
+
+// def file = new File(baseDir,"haiku.txt").eachByte {println it as char}
+
+// def file = new File(baseDir, "haiku.txt")
+// byte[] contents = file.bytes
+// println "length of the file $contents.length"
+// contents.each { println it }
+
+def file = new File(baseDir, "haiku.txt").newInputStream()
+byte[] contents = file.bytes
+println "length of the file $contents.length"
+contents.each { println it }
+
+def file = new File(baseDir, "haiku.txt").withInputStream { stream ->
+   byte [] bytes = stream.bytes
+   bytes.each {println it}
+}
+....................................................................................
+			JSON Slurper
+
+convert strings(json) into object
+import groovy.json.JsonSlurper
+
+//map object
+def json = new JsonSlurper()
+def map = json.parseText('{"name" : "Subramanian"}')
+println map
+
+def jsonList = new JsonSlurper()
+def list = jsonList.parseText('{ "myList": [4, 8, 15, 16, 23, 42] }')
+println list
+// parsing data from the json file.
+//load json from json file
+def jsonFile = new JsonSlurper()
+def response = jsonFile.parse(new File("./", "todos.json"))
+println response
+
+...................................................................................
+				JSON builder
+import groovy.json.JsonBuilder
+import groovy.json.JsonOutput
+
+JsonBuilder builder = new JsonBuilder()
+
+builder.records {
+    car {
+        name 'HSV Maloo'
+        make 'Holden'
+        year 2006
+        country 'Australia'
+        homepage new URL('http://example.org')
+        record {
+            type 'speed'
+            description 'production pickup truck with speed of 271kph'
+        }
+    }
+}
+String json = JsonOutput.prettyPrint(builder.toString())
+println json
+.....................................................................................
+			JSON output
+
+import groovy.json.JsonOutput
+
+def data = [
+        name     : "Foo Bar",
+        year     : "2018",
+        timestamp: "2018-03-08T00:00:00",
+        tags     : ["person", "employee"],
+        grade    : 3.14
+]
+def baseDir = "./"
+def json_str = JsonOutput.toJson(data)
+def json_beauty = JsonOutput.prettyPrint(json_str)
+new File(baseDir, 'emp.json') << json_str
+print json_beauty
+...................................................................................
+				Grails
+
+Spring Boot is written in java, what if i want to write Spring Boot apps in groovy,
+Grails
+A powerful Groovy-based web application framework for the JVM built on top of Spring Boot
+
+
+
+
+
+
+
+
+
+
 
 
 
